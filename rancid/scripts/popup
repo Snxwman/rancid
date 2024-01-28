@@ -1,0 +1,11 @@
+#!/bin/bash
+
+calendar() {
+    grep "calendar" <<< "$(eww active-windows)" \
+        && { eww close calendar && eww update cal-reveal="false" ; } \
+        || { eww open calendar  && eww update cal-reveal="true"  ; }
+}
+
+case $1 in
+    "calendar" ) calendar ;; 
+esac
