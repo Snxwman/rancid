@@ -1,0 +1,84 @@
+(include "./vars.yuck")
+(include "./custom/user.yuck")
+
+(defvar rancid-wm "$HOME/.config/rancid/scripts/wm")
+
+(defvar wm-state "[]")
+(defvar reveal-layout false)
+
+(defwidget screen []
+    (label))
+
+(defwidget workspaces [?screen ?space-evenly ?orientation ?halign]
+    (box 
+        :class 
+            "workspace-widget
+            ${theme}-workspace-widget"
+        :space-evenly '${space-evenly == "false" ? false : "${space-evenly}"}'
+        :orientation '${orientation == "" ? "horizontal" : "${orientation}"}'
+        :halign '${halign == "" ? "start" : "${halign}"}'
+        (for workspace in "${wm-state}"
+            (button 
+                :class 
+                    'workspace-button 
+                    workspace-button-${workspace.name} 
+                    ${workspace.active == "true" ? "workspace-button-active" : ""} 
+                    ${workspace.screen != "null" ? "workspace-button-active-${workspace.screen}" : ""} 
+                    ${workspace.screen == "0" ? "workspace-button-active-primary" : ""} 
+                    ${workspace.screen == "1" ? "workspace-button-active-secondary" : ""} 
+                    ${workspace.screen == "2" ? "workspace-button-active-tertiary" : ""} 
+                    ${workspace.open_window == "true" ? "workspace-button-window-open" : ""} 
+                    ${theme} 
+                    ${theme}-workspace-button 
+                    ${workspace.active == "true" ? "${theme}-workspace-button-active" : ""} 
+                    ${workspace.screen == "0" ? "${theme}-workspace-button-active-primary" : ""} 
+                    ${workspace.screen == "1" ? "${theme}-workspace-button-active-secondary" : ""} 
+                    ${workspace.screen == "2" ? "${theme}-workspace-button-active-tertiary" : ""} 
+                    ${workspace.open_window == "true" ? "${theme}-workspace-button-window-open" : ""}' 
+                :tooltip "${workspace.name}"
+                :onclick "${rancid-wm} ${wm} togroup ${workspace.name}"
+                "${workspace.icon}"))))
+
+(defwidget layouts [screen ?space-evenly ?transition ?duration ?keep-open]
+    (eventbox 
+        :class 
+            'layouts-widget 
+            ${theme}-layouts-widget'
+        :onhover "${rancid-wm} rancid toggle_layout_reveal" 
+        :onhoverlost "${rancid-wm} rancid toggle_layout_reveal" 
+        (box 
+            :class 
+                'active-layout 
+                ${theme}-active-layout' 
+            :space-evenly '${space-evenly == "" ? false : "${space-evenly}"}'
+            (label 
+                :class 
+                    'active-layout 
+                    active-layout-icon 
+                    ${theme}-active-layout 
+                    ${theme}-active-layout-icon'
+                :text {replace(jq(wm-state, ".[] | select(.active == true) | select(.screen == ${screen}) | .layout_icon"), '\"', '')}
+                :tooltip {replace(jq(wm-state, ".[] | select(.active == true) | select(.screen == ${screen}) | .layout"), '\"', '')})
+            (revealer 
+                :transition '${transition == "" ? "slideright" : "${transition}"}' 
+                :duration '${duration == "" ? "300ms" : "${duration}"}' 
+                :reveal reveal-layout 
+                (box 
+                    :class 
+                        'available-layout-box 
+                        ${theme}-available-layout-box'
+                    (for layout in {jq(wm-state, ".[] | select(.active == true) | select(.screen == ${screen}) | .layouts")} 
+                        (button 
+                            :class 
+                                'available-layout-button 
+                                ${theme}-available-layout-button'
+                            :tooltip "${layout.name}"
+                            :onclick "${rancid-wm} ${wm} setlayout ${layout.name}"
+                            "${layout.icon}")))))))
+
+(defwidget windows [screen]
+    (box))
+
+(defwidget active-window-title [screen]
+    (box))
+
