@@ -1,0 +1,3 @@
+(defvar wm "qtile")
+(defvar theme "tokyonight")
+
