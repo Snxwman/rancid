@@ -1,0 +1,8 @@
+(defwidget icon [icon ?cmd ?class]
+    (button
+        :class
+            'icon 
+            ${theme}-icon
+            ${class}'
+        :onclick "${cmd}"
+        "${icon}"))
