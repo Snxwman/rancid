@@ -1,0 +1,33 @@
+#!/bin/bash
+
+toggle_layout_reveal() {
+    grep "reveal-layout: false" <<< $(rancid state) &> /dev/null \
+        && rancid update reveal-layout=true \
+        || rancid update reveal-layout=false
+}
+
+rancid_dispatch() {
+    fn="$1"; shift
+
+    case "$fn" in
+        "toggle_layout_reveal" ) toggle_layout_reveal ;;
+    esac
+}
+
+qtile_commands() {
+    fn="$1"; shift
+
+    case "$fn" in
+        "togroup" ) qtile cmd-obj -o group "$1" -f toscreen ;;
+        "setlayout" ) qtile cmd-obj -o group -f setlayout "$1" ;;
+    esac
+}
+
+
+context="$1"; shift
+
+case $context in
+    rancid ) rancid_dispatch "$@" ;;
+    qtile ) qtile_commands "$@" ;;
+esac
+
