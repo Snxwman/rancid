@@ -1,7 +1,6 @@
-(include "./vars.yuck")
 (include "./custom/user.yuck")
 
-(defvar rancid-wm "$HOME/.config/rancid/scripts/wm")
+(defvar rancid-wm "$HOME/.config/rancid/rancid/scripts/wm")
 
 (defvar wm-state "[]")
 (defvar reveal-layout false)
@@ -9,11 +8,21 @@
 (defwidget screen []
     (label))
 
-(defwidget workspaces [?screen ?space-evenly ?orientation ?halign]
+
+(defwidget workspaces 
+    [
+        ?screen ?label 
+        ?box-classes ?space-evenly ?orientation ?halign 
+        ?button-classes
+    ]
     (box 
         :class 
-            "workspace-widget
-            ${theme}-workspace-widget"
+            "workspace-widget 
+            ${theme}
+            ${theme}-workspace-widget
+            ${style}
+            ${style}-workspace-widget
+            ${box-classes}"
         :space-evenly '${space-evenly == "false" ? false : "${space-evenly}"}'
         :orientation '${orientation == "" ? "horizontal" : "${orientation}"}'
         :halign '${halign == "" ? "start" : "${halign}"}'
@@ -22,8 +31,8 @@
                 :class 
                     'workspace-button 
                     workspace-button-${workspace.name} 
-                    ${workspace.active == "true" ? "workspace-button-active" : ""} 
                     ${workspace.screen != "null" ? "workspace-button-active-${workspace.screen}" : ""} 
+                    ${workspace.active == "true" ? "workspace-button-active" : ""} 
                     ${workspace.screen == "0" ? "workspace-button-active-primary" : ""} 
                     ${workspace.screen == "1" ? "workspace-button-active-secondary" : ""} 
                     ${workspace.screen == "2" ? "workspace-button-active-tertiary" : ""} 
@@ -34,10 +43,22 @@
                     ${workspace.screen == "0" ? "${theme}-workspace-button-active-primary" : ""} 
                     ${workspace.screen == "1" ? "${theme}-workspace-button-active-secondary" : ""} 
                     ${workspace.screen == "2" ? "${theme}-workspace-button-active-tertiary" : ""} 
-                    ${workspace.open_window == "true" ? "${theme}-workspace-button-window-open" : ""}' 
+                    ${workspace.open_window == "true" ? "${theme}-workspace-button-window-open" : ""}  
+                    ${style} 
+                    ${style}-workspace-button 
+                    ${workspace.active == "true" ? "${style}-workspace-button-active" : ""} 
+                    ${workspace.screen == "0" ? "${style}-workspace-button-active-primary" : ""} 
+                    ${workspace.screen == "1" ? "${style}-workspace-button-active-secondary" : ""} 
+                    ${workspace.screen == "2" ? "${style}-workspace-button-active-tertiary" : ""} 
+                    ${workspace.open_window == "true" ? "${style}-workspace-button-window-open" : ""}
+                    ${button-classes}'
                 :tooltip "${workspace.name}"
                 :onclick "${rancid-wm} ${wm} togroup ${workspace.name}"
-                "${workspace.icon}"))))
+                '${label == "" ? "${workspace.icon}" : 
+                    label == "icon" ? "${workspace.icon}" : 
+                        label == "name" ? "${workspace.name}" : 
+                            label = "number" ? "${workspace.number}" : "error"}'))))
+
 
 (defwidget layouts [screen ?space-evenly ?transition ?duration ?keep-open]
     (eventbox 
@@ -76,8 +97,10 @@
                             :onclick "${rancid-wm} ${wm} setlayout ${layout.name}"
                             "${layout.icon}")))))))
 
+
 (defwidget windows [screen]
     (box))
+
 
 (defwidget active-window-title [screen]
     (box))
