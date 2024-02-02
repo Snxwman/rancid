@@ -1,11 +1,20 @@
 #!/bin/bash
 
+rancid="/opt/eww -c /home/david/.config/rancid"
+
 calendar() {
-    grep "calendar" <<< "$(eww active-windows)" \
-        && { eww close calendar && eww update cal-reveal="false" ; } \
-        || { eww open calendar  && eww update cal-reveal="true"  ; }
+    grep "calendar" <<< "$($rancid active-windows)" \
+        && { $rancid close calendar && $rancid update cal-reveal="false" ; } \
+        || { $rancid open calendar  && $rancid update cal-reveal="true"  ; }
+}
+
+volume(){
+    grep "volume" <<< "$($rancid active-windows)" \
+        && { $rancid close volume && $rancid update volume-reveal="false" ; } \
+        || { $rancid open volume  && $rancid update volume-reveal="true"  ; }
 }
 
 case $1 in
     "calendar" ) calendar ;; 
+    "volume" ) volume ;;
 esac

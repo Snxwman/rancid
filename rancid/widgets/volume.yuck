@@ -1,0 +1,75 @@
+; TODO : Move volume-output/input to a script if required
+(defpoll volume-output :interval "1s" "wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -f 2 -d '.'")
+(defpoll volume-input :interval "1s" "wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | cut -f 2 -d '.'")
+(defvar volume-reveal false)
+(defvar rancid-volume "$HOME/.config/rancid/scripts/popup")
+
+(defwidget volume-control [
+    ?theme ?style ?type
+    ?box-classes ?button-classes
+    ?space-evenly ?orientation ?halign
+]
+    (box 
+	:class "volume-widget 
+		${theme} 
+		${theme}-volume-widget 
+		${style} 
+		${style}-volume-widget 
+		${box-classes} 
+		"
+	:space-evenly '${space-evenly ?: false}'
+	:orientation '${orientation ?: "h"}'
+	:halign '${halign ?: "start"}'
+	(button 
+	    :class "volume-button
+		    ${theme}
+		    ${theme}-volume-button 
+		    ${style} 
+		    ${style}-volume-button 
+		    ${button-classes}
+		    "
+	    :onclick "${rancid-volume} volume"
+	    "")))
+
+(defwidget volume-window [?window-classes ?theme ?style]
+    (box 
+	:class "volume-window 
+		${theme} 
+		${theme}-volume-window 
+		${style} 
+		${style}-volume-window 
+		${window-classes}"
+	:orientation "v"
+	:halign "center"
+	(box
+	    :orientation "h"
+	    :space-evenly false
+	    (label 
+		:text "")
+	    (scale 
+		:width 250
+		:value volume-output
+		:orientation "h"
+		; TODO : Move this to its own script for different volume controls
+		:onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%"))
+	(box
+	    :orientation "h"
+	    :space-evenly false
+	    (label 
+		:text "")
+	    (scale
+		:width 250
+		:value volume-input
+		:orientation "h"
+		; TODO : Move this to its own script for different volume controls
+		:onchange "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ {}%"))))
+	
+
+(defwindow volume 
+    :geometry (geometry
+	:x "0px"
+	:y "120px"
+	:anchor "top center"
+	:width "300px"
+	:height "100px")
+    (volume-window))
