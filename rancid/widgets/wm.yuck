@@ -1,6 +1,6 @@
 (include "./custom/user.yuck")
 
-(defvar rancid-wm "$HOME/.config/rancid/rancid/scripts/wm")
+(defvar rancid-wm "$HOME/.config/rancid/scripts/wm")
 
 (defvar wm-state "[]")
 (defvar reveal-layout false)
@@ -23,7 +23,7 @@
             ${style}
             ${style}-workspace-widget
             ${box-classes}"
-        :space-evenly '${space-evenly == "false" ? false : "${space-evenly}"}'
+        :space-evenly '${space-evenly ?: false}'
         :orientation '${orientation == "" ? "horizontal" : "${orientation}"}'
         :halign '${halign == "" ? "start" : "${halign}"}'
         (for workspace in "${wm-state}"
@@ -57,7 +57,7 @@
                 '${label == "" ? "${workspace.icon}" : 
                     label == "icon" ? "${workspace.icon}" : 
                         label == "name" ? "${workspace.name}" : 
-                            label = "number" ? "${workspace.number}" : "error"}'))))
+                            label == "number" ? "${workspace.number}" : "error"}'))))
 
 
 (defwidget layouts [screen ?space-evenly ?transition ?duration ?keep-open]
