@@ -1,0 +1,22 @@
+(include "./widgets/wm.yuck")
+(include "./widgets/volume.yuck")
+(defvar style "pill")
+(defwidget testing-widget []
+    (box
+	:orientation "h"
+	:halign "start"
+	(workspaces )
+	(volume-control)))
+(defwindow test
+    :monitor 0
+    :geometry (geometry 
+	:x "0%"
+	:y "50px"
+	:height "50px"
+	:anchor "top center")
+    :stacking "fg"
+    :windowtype "dock"
+    :wm-ignore false
+    :reserve (struts :distance "70px" :side "top")
+    (testing-widget))
+
