@@ -12,6 +12,10 @@ volume(){
         || { rancid open volume  && rancid update volume-reveal="true"  ; }
 }
 
+#grep "$1" <<< "$(rancid active-windows)" \
+#    && { rancid close "$1" && rancid update "${1}-reveal"="false" ; } \
+#    || { rancid open "$1" && rancid update "${1}-reveal"="true" ; } \
+
 case $1 in
     "calendar" ) calendar ;; 
     "volume" ) volume ;;
