@@ -11,6 +11,7 @@
 - [Config]()
 - [Widgets]()
     - [wm]()
+    - [volume](widgets/volume.md)
 - [Themes]()
     - [Tokyonight]()
     - [Gruvbox]()
