@@ -1,6 +1,6 @@
 ; TODO : Move volume-output/input to a script if required
-(defpoll volume-output :interval "1s" "wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -f 2 -d '.' | cut -f1 -d ' ' ")
-(defpoll volume-input :interval "1s" "wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | cut -f 2 -d '.' | cut -f1 -d ' ' ")
+(defpoll volume-output :interval "1s" '$HOME/.config/rancid/scripts/volume get output')
+(defpoll volume-input :interval "1s" '$HOME/.config/rancid/scripts/volume get input')
 
 (defvar volume-reveal false)
 (defvar volume-output-mute false)
@@ -69,7 +69,7 @@
 		:value volume-output
 		:orientation "h"
 		; TODO : Move this to its own script for different volume controls
-		:onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%")
+		:onchange "${rancid-volume} change output {}")
 		)
 	(box
 	    :orientation "h"
@@ -89,7 +89,7 @@
 		:value volume-input
 		:orientation "h"
 		; TODO : Move this to its own script for different volume controls
-		:onchange "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ {}%"))))
+		:onchange "${rancid-volume} change input {}"))))
 	
 
 (defwindow volume 

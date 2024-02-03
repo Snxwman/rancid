@@ -22,8 +22,41 @@ mute(){
     esac
 }
 
+change(){
+    dev="$1"; shift
+    case "$dev" in 
+	output )
+	    wpctl set-volume @DEFAULT_AUDIO_SINK@ $1%;;
+
+	input )
+	    wpctl set-volume @DEFAULT_AUDIO_SOURCE@ $1%;;
+    esac
+}
+
+get-volume(){
+
+    dev="$1"; shift
+
+    case "$dev" in 
+	output )
+	    wpctl get-volume @DEFAULT_AUDIO_SINK@ |\
+		cut -f 2 -d '.' |\
+		cut -f1 -d ' '
+			    ;;
+	input )
+	    wpctl get-volume @DEFAULT_AUDIO_SOURCE@ |\
+		cut -f 2 -d '.' |\
+		cut -f1 -d ' ' 
+			    ;;
+    esac
+
+}
+
 command="$1"; shift
 case $command in
+
     mute ) mute "$@";;
+    change ) change "$@";;
+    get ) get-volume "$@";;
 
 esac
