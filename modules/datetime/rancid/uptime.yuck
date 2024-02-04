@@ -1,0 +1,18 @@
+(defvar uptime-visible true)
+(defpoll uptime
+    :interval "30s" 
+    :run-while uptime-visible
+    "./scripts/uptime")
+
+(defwidget uptime [?uptime-classes]
+    (label
+        :class 
+            'uptime 
+            ${theme} 
+            ${theme}-uptime 
+            ${style} 
+            ${style}-uptime 
+            ${uptime-classes}'
+        :visible uptime-visible
+        :text 
+            "${uptime.days.total} days, ${uptime.hours.until-day} hrs ${uptime.minutes.until-hour} mins"))

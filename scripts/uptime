@@ -1,0 +1,56 @@
+#!/bin/bash
+
+uptime="$(cat /proc/uptime | cut -d'.' -f1)"
+
+# The total uptime as a floored integer in each unit
+# The divisor is the unit in seconds
+minutes=$(( $uptime / 60 ))
+hours=$(( $uptime / 3600 ))
+days=$(( $uptime / 86400 ))
+weeks=$(( $uptime / 604800 ))
+months=$(( $uptime / 2628000 ))
+years=$(( $uptime / 31546000 ))
+
+jq --null-input --compact-output \
+    --argjson seconds "$(
+        jq --null-input --compact-output \
+            --arg total "$uptime" \
+            --arg until-minute "$(( $uptime % 60 ))" \
+            '$ARGS.named'
+        )" \
+    --argjson minutes "$(
+        jq --null-input --compact-output \
+            --arg total "$minutes" \
+            --arg until-hour "$(( $minutes % 60 ))" \
+            '$ARGS.named'
+        )" \
+    --argjson hours "$(
+        jq --null-input --compact-output \
+            --arg total "$hours" \
+            --arg until-day "$(( $hours % 24 ))" \
+            '$ARGS.named'
+        )" \
+    --argjson days "$(
+        jq --null-input --compact-output \
+            --arg total "$days" \
+            --arg until-week "$(( $days % 7 ))" \
+            --arg until-month "$(( $days % 30 ))" \
+            --arg until-year "$(( $days % 365 ))" \
+            '$ARGS.named'
+        )" \
+    --argjson weeks "$(
+        jq --null-input --compact-output \
+            --arg total "$weeks" \
+            --arg until-month "$(( $weeks % 4 ))" \
+            --arg until-year "$(( $weeks % 52 ))" \
+            '$ARGS.named'
+        )" \
+    --argjson months "$(
+        jq --null-input --compact-output \
+            --arg total "$months" \
+            --arg until-year "$(( $months % 12 ))" \
+            '$ARGS.named'
+        )" \
+    --argjson years "$years" \
+    '$ARGS.named'
+
