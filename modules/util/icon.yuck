@@ -1,4 +1,4 @@
-(defwidget icon [icon ?cmd ?class]
+(defwidget icon [icon ?cmd ?class ?theme]
     (button
         :class
             'icon 

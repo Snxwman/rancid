@@ -4,7 +4,10 @@
     :run-while uptime-visible
     "./scripts/uptime")
 
-(defwidget uptime [?uptime-classes]
+(defwidget uptime [
+	    ?uptime-classes
+	    ?theme ?style
+	    ]
     (label
         :class 
             'uptime 
