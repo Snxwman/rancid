@@ -2,3 +2,4 @@
 (include "./modules/datetime/rancid/uptime.yuck")
 (include "./modules/util/icon.yuck")
 (include "./modules/wm/rancid/wm.yuck")
+(include "./modules/datetime/rancid/calendar.yuck")

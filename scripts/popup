@@ -2,8 +2,8 @@
 
 calendar() {
     grep "calendar" <<< "$(rancid active-windows)" \
-        && { rancid close calendar && rancid update cal-reveal="false" ; } \
-        || { rancid open calendar  && rancid update cal-reveal="true"  ; }
+        && { rancid close calendar-window && rancid update cal-reveal="false" ; } \
+        || { rancid open calendar-window  && rancid update cal-reveal="true"  ; }
 }
 
 volume(){
