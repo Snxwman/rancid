@@ -1,0 +1,22 @@
+(defpoll clock-hour :interval "1m" "./scripts/datetime hour")
+(defpoll clock-minute :interval "10s" "./scripts/datetime minute")
+
+(defwidget clock-widget
+    [
+	?clickable
+	?orientation ?space-evenly ?halign
+	?button-class
+    ]
+    (button
+	:class "clock-button 
+		${theme} 
+		${theme}-clock-button 
+		${style} 
+		${style}-clock-button 
+		${button-class}"
+	:onclick "${clickable == true ? './scripts/popup calendar' : ''}"
+	:space-evenly "${space-evenly ?: false}"
+	:orientation "${orientation ?: 'h'}"
+	:halign "${halign ?: 'left'}"
+	"${clock-hour} : ${clock-minute}"
+	))

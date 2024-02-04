@@ -7,5 +7,9 @@ case $arg in
 	date '+%d';;
     year ) 
 	date '+%Y';;
+    minute ) 
+	date '+%M';;
+    hour )
+	date '+%I';;
 
 esac
