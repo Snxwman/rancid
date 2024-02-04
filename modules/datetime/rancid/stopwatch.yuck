@@ -1,0 +1,73 @@
+(defvar stopwatch-visible true)
+(defvar stopwatch-active false)
+(defpoll stopwatch-state
+    :interval "10ms"
+    :run-while stopwatch-visible
+    "./scripts/stopwatch")
+
+
+
+(defwidget stopwatch 
+    [
+        ?lap-icon ?active-icon ?inactive-icon ?reset-icon
+        ?box-classes ?label-classes ?lap-button-classes ?toggle-button-classes ?reset-button-classes
+    ]
+    (box
+        :class 
+            'stopwatch 
+            ${theme} 
+            ${theme}-stopwatch 
+            ${style} 
+            ${style}-stopwatch 
+            ${box-classes}'
+        :visible stopwatch-visible
+        (label
+            :class
+                'stopwatch-label
+                ${theme}
+                ${theme}-stopwatch-label
+                ${style}
+                ${style}-stopwatch-label
+                ${label-classes}'
+            :text '${stopwatch-active == true ? "${stopwatch-state.time}" : "00:00.00"}')
+        (button
+            :class 
+                'stopwatch-button 
+                stopwatch-toggle-button 
+                ${stopwatch-active == true 
+                    ?   "stopwatch-toggle-button-active 
+                        ${theme}-stopwatch-toggle-button-active 
+                        ${style}-stopwatch-toggle-button-active" 
+                    :   "stopwatch-toggle-button-inactive 
+                        ${theme}-stopwatch-toggle-button-inactive 
+                        ${style}-stopwatch-toggle-button-inactive"} 
+                ${theme} 
+                ${theme}-stopwatch-toggle-button 
+                ${style} 
+                ${style}-stopwatch-toggle-button 
+                ${toggle-button-classes}'
+            :onclick "rancid update stopwatch-active=true"
+            :onrightclick "rancid update stopwatch-active=false"
+            "${stopwatch-active == true 
+                ? inactive-icon ?: '󱫫'
+                : active-icon ?: '󱫡'}") 
+        (button
+            :class
+                'stopwatch-button 
+                stopwatch-lap-button 
+                ${theme} 
+                ${theme}-stopwatch-lap-button 
+                ${style} 
+                ${style}-stopwatch-lap-button 
+                ${lap-button-classes}'
+            "${lap-icon ?: '󱫣'}")
+        (button
+            :class
+                'stopwatch-button 
+                stopwatch-reset-button 
+                ${theme} 
+                ${theme}-stopwatch-reset-button 
+                ${style} 
+                ${style}-stopwatch-reset-button 
+                ${reset-button-classes}'
+            "${reset-icon ?: '󱫥'}")))
