@@ -1,0 +1,35 @@
+#!/usr/bin/bash
+
+_get_connected_wifi_ssid() {
+    ssid=$(nmcli -g general.connection device show "$1")
+    echo $ssid
+}
+
+_get_connected_wifi_gateway() {
+    gateway=$(nmcli -g ip4.gateway device show "$1")
+    echo $gateway
+}
+
+_get_connected_wifi_dns() {
+    dns=$(nmcli -g ip4.dns device show "$1" | tr '|' ',')
+    echo $dns
+}
+
+_get_connected_wifi_ipaddr() {
+    ipv4=$(nmcli -g ip4.address device show "$1" | cut -d'/' -f1)
+    echo $ipv4
+}
+
+_get_connected_wifi_strength() {
+    signal=$(nmcli -t -f IN-USE,SIGNAL device wifi | grep "*" | cut -d':' -f2)
+    echo $signal
+}
+
+jq --null-input --compact-output \
+    --arg ssid "$(_get_connected_wifi_ssid "$1")" \
+    --arg gateway "$(_get_connected_wifi_gateway "$1")" \
+    --arg dns "$(_get_connected_wifi_dns "$1")" \
+    --arg ipv4 "$(_get_connected_wifi_ipaddr "$1")" \
+    --arg strength "$(_get_connected_wifi_strength)" \
+    '$ARGS.named'
+

@@ -1,0 +1,41 @@
+(defvar wifi-info-window-reveal false)
+(defpoll network :interval "3s" "./scripts/network wlan0")
+
+(defwidget wifi []
+    (icon
+        :class
+            'wifi 
+            button icon 
+            ${theme} 
+            ${style}'
+        :icon
+           '${network.strength >= 90 ? "󰤨" : 
+               network.strength >= 70 ? "󰤥" : 
+               network.strength >= 40 ? "󰤢" : 
+               network.strength >= 10 ? "󰤟" : 
+               network.strength >=  0 ? "󰤯" : "error" }'
+        :tooltip "${network.ssid} : ${network.strength}"
+        :cmd "./scripts/popup wifi-info-window"))
+
+(defwidget wifi-info []
+    (box
+        :orientation "vertical"
+        (label
+            :xalign 0
+            :text "Network SSID: \\t\\t${network.ssid}")
+        (label
+            :xalign 0
+            :text "Default Gateway: \\t\\t${network.gateway}")
+        (label
+            :xalign 0
+            :text "IPv4 Address: \\t\\t\\t${network.ipv4}")
+        (label
+            :xalign 0
+            :text "DNS Server(s): \\t\\t${network.dns}")
+        (label
+            :xalign 0
+            :text "Connection Strength: \\t${network.strength}")))
+
+(defwindow wifi-info-window []
+    :geometry (geometry :x 0 :y 100 :anchor "top center")
+    (wifi-info))
