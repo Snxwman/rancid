@@ -1,0 +1,11 @@
+(defwidget cpu-widget 
+    [
+	?halign ?orientation	
+    ]
+    (box
+	:halign "${halign ?: 'center'}"
+	:orientation "${orientation ?: 'h'}"
+	(label 
+	    :text "${EWW_CPU.avg}" 
+	    :limit-width 4 
+	    :show-truncated false)))

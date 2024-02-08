@@ -1,0 +1,11 @@
+(defwidget ram-widget 
+    [
+	?halign ?orientation	
+    ]
+    (box
+	:halign "${halign ?: 'center'}"
+	:orientation "${orientation ?: 'h'}"
+	(label 
+	    :text "${EWW_RAM.used_mem / 1073741000.824}"
+	    :limit-width 5
+	    :show-truncated false)))

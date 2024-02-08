@@ -1,0 +1,2 @@
+(include "./modules/hwmon/rancid/cpu-mon.yuck")
+(include "./modules/hwmon/rancid/ram-mon.yuck")
