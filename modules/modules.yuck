@@ -1,6 +1,7 @@
-(include "./modules/audio/audio-modules.yuck")
-(include "./modules/datetime/datetime-modules.yuck")
-(include "./modules/hwmon/hwmon-modules.yuck")
-(include "./modules/util/util-modules.yuck")
-(include "./modules/wm/wm-modules.yuck")
+(include "./modules/audio/modules.yuck")
+(include "./modules/datetime/modules.yuck")
+(include "./modules/network/modules.yuck")
+;(include "./modules/hwmon/modules.yuck")
+(include "./modules/util/modules.yuck")
+(include "./modules/wm/modules.yuck") 
 
