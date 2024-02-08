@@ -2,14 +2,8 @@
 
 arg="$1"; shift
 case $arg in 
-
-    day )
-	date '+%d';;
-    year ) 
-	date '+%Y';;
-    minute ) 
-	date '+%M';;
-    hour )
-	date '+%I';;
-
+    day    ) date '+%d' ;;
+    year   ) date '+%Y' ;;
+    minute ) date '+%M' ;;
+    hour   ) date '+%I' ;;
 esac
