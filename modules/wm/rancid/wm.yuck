@@ -52,10 +52,10 @@
                     ${button-classes}'
                 :tooltip "${workspace.name}"
                 :onclick "${rancid-wm} ${wm} togroup ${workspace.name}"
-                '${label == "" ? "${workspace.icon}" : 
-                    label == "icon" ? "${workspace.icon}" : 
-                        label == "name" ? "${workspace.name}" : 
-                            label == "number" ? "${workspace.number}" : "error"}'))))
+                '${label == ""       ? "${workspace.icon}" : 
+                   label == "icon"   ? "${workspace.icon}" : 
+                   label == "name"   ? "${workspace.name}" : 
+                   label == "number" ? "${workspace.number}" : "error"}'))))
 
 
 (defwidget layouts [screen ?space-evenly ?transition ?duration ?keep-open ?wm ?theme]

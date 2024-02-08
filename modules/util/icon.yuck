@@ -1,8 +1,10 @@
-(defwidget icon [icon ?cmd ?class ?theme]
+(defwidget icon [icon ?cmd ?tooltip ?class ?theme]
     (button
         :class
             'icon 
-            ${theme}-icon
+            ${theme} 
+            ${style} 
             ${class}'
         :onclick "${cmd}"
+        :tooltip "${tooltip}"
         "${icon}"))
