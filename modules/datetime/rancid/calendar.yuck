@@ -32,7 +32,7 @@
 		${style}-calendar-button 
 		${button-class}"
 	:orientation "${orientation ?: 'h'}"    
-	:onclick "./scripts/popup calendar"
+	:onclick "./scripts/popup calendar-window"
 	""))
 
 (defwindow calendar-window

@@ -1,22 +1,6 @@
 #!/bin/bash
 
-calendar() {
-    grep "calendar" <<< "$(rancid active-windows)" \
-        && { rancid close calendar-window && rancid update cal-reveal="false" ; } \
-        || { rancid open calendar-window  && rancid update cal-reveal="true"  ; }
-}
+grep "$1" <<< "$(rancid active-windows)" \
+   && { rancid close "$1" && rancid update "${1}-reveal"="false" ; } \
+   || { rancid open "$1" && rancid update "${1}-reveal"="true" ; } \
 
-volume(){
-    grep "volume" <<< "$(rancid active-windows)" \
-        && { rancid close volume && rancid update volume-reveal="false" ; } \
-        || { rancid open volume  && rancid update volume-reveal="true"  ; }
-}
-
-#grep "$1" <<< "$(rancid active-windows)" \
-#    && { rancid close "$1" && rancid update "${1}-reveal"="false" ; } \
-#    || { rancid open "$1" && rancid update "${1}-reveal"="true" ; } \
-
-case $1 in
-    "calendar" ) calendar ;; 
-    "volume" ) volume ;;
-esac
