@@ -1,8 +1,6 @@
-(include "./modules/audio/rancid/volume.yuck")
-(include "./modules/datetime/rancid/calendar.yuck")
-(include "./modules/datetime/rancid/clock.yuck")
-(include "./modules/datetime/rancid/stopwatch.yuck")
-(include "./modules/datetime/rancid/uptime.yuck")
-(include "./modules/wm/rancid/wm.yuck")
+(include "./modules/audio/audio-modules.yuck")
+(include "./modules/datetime/datetime-modules.yuck")
+(include "./modules/hwmon/hwmon-modules.yuck")
+(include "./modules/util/util-modules.yuck")
+(include "./modules/wm/wm-modules.yuck")
 
-(include "./modules/util/icon.yuck")

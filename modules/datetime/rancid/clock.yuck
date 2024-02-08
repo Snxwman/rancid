@@ -4,7 +4,7 @@
 (defwidget clock-widget
     [
 	?clickable
-	?orientation ?space-evenly ?halign
+	?halign
 	?button-class
     ]
     (button
@@ -15,8 +15,6 @@
 		${style}-clock-button 
 		${button-class}"
 	:onclick "${clickable == true ? './scripts/popup calendar' : ''}"
-	:space-evenly "${space-evenly ?: false}"
-	:orientation "${orientation ?: 'h'}"
 	:halign "${halign ?: 'left'}"
 	"${clock-hour} : ${clock-minute}"
 	))
