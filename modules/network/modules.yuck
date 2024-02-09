@@ -1,1 +1,2 @@
+(include "./modules/network/rancid/bluetooth.yuck")
 (include "./modules/network/rancid/wifi.yuck")

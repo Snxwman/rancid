@@ -1,0 +1,111 @@
+#!/usr/bin/bash
+
+_get_bluetooth_controller_info_as_json() {
+    conn_info="$(bluetoothctl show)"
+    blocks_info="$(rfkill list bluetooth)"
+
+    conn_name="$(grep "Name:" <<< "$conn_info" | cut -d':' -f2 | cut -d' ' -f2-)"
+    conn_powered="$(grep "Powered:" <<< "$conn_info" | cut -d':' -f2 | cut -d' ' -f2)"
+    conn_discoverable="$(grep "Discoverable:" <<< "$conn_info" | cut -d':' -f2 | cut -d' ' -f2)"
+    conn_pairable="$(grep "Pairable:" <<< "$conn_info" | cut -d':' -f2 | cut -d' ' -f2)"
+    conn_discovering="$(grep "Discovering:" <<< "$conn_info" | cut -d':' -f2 | cut -d' ' -f2)"
+
+    grep "Soft blocked: no" <<< "$blocks_info" &> /dev/null \
+        && soft_block="false" \
+        || soft_block="true"
+
+    grep "Hard blocked: no" <<< "$blocks_info" &> /dev/null \
+        && hard_block="false" \
+        || hard_block="true"
+
+    jq --null-input --compact-output \
+        --arg name "$conn_name" \
+        --arg powered "$conn_powered" \
+        --arg discoverable "$conn_discoverable" \
+        --arg pairable "$conn_pairable" \
+        --arg discovering "$conn_discovering" \
+        --argjson blocks "$(
+            jq --null-input --compact-output \
+                --arg soft "$soft_block" \
+                --arg hard "$hard_block" \
+                '$ARGS.named'    
+            )" \
+        '$ARGS.named'
+}
+
+_get_bluetooth_devices_info_as_json() {
+    readarray -t devices <<< $(bluetoothctl devices | cut -d' ' -f2)
+
+    devices_json="{\"devices\": []}"
+
+    for device in ${devices[@]}; do
+        device_info="$(bluetoothctl info "$device")"
+        
+        device_name="$(grep "Name:" <<< "$device_info" | cut -d':' -f2 | cut -d' ' -f2-)"
+        device_mac=$(grep "Device " <<< "$device_info" | cut -d' ' -f2)
+        device_icon="$(grep "Icon:" <<< "$device_info" | cut -d':' -f2 | cut -d' ' -f2-)"
+        device_paired="$(grep "Paired:" <<< "$device_info" | cut -d':' -f2 | cut -d' ' -f2-)"
+        device_connected="$(grep "Connected:" <<< "$device_info" | cut -d':' -f2 | cut -d' ' -f2-)"
+        device_battery="$(grep "Battery Percentage:" <<< "$device_info" | cut -d':' -f2 | cut -d' ' -f2-)"
+        device_battery="$(cut -d'(' -f2- <<< "$device_battery" | cut -d')' -f1)"
+        
+        device_json="$( \
+            jq --null-input --compact-output \
+                --arg name "$device_name" \
+                --arg mac "$device_mac" \
+                --arg icon "$device_icon" \
+                --arg paired "$device_paired" \
+                --arg connected "$device_connected" \
+                --arg battery "$device_battery" \
+                '$ARGS.named'
+        )"
+
+        devices_json="$(jq ".devices |= .+ [${device_json}]" <<< $devices_json)"
+    done
+
+    echo $devices_json | jq .devices
+}
+
+_toggle_bluetooth_controller_status() {
+    grep "Powered: no" <<< $(bluetoothctl show) \
+        && bluetoothctl power on \
+        || bluetoothctl power off
+}
+
+_connect_bluetooth_device() {
+    bluetoothctl connect "$1" &> /dev/null
+}
+
+_disconnect_bluetooth_device() {
+    bluetoothctl disconnect "$1" &> /dev/null
+}
+
+_get_bluetooth_scan_results_as_json() {
+    echo
+}
+
+_pair_bluetooth_device() {
+    echo
+}
+
+_forget_bluetooth_devices() {
+    echo
+}
+
+cmd="$1"; shift
+dev="$1"; shift
+case $cmd in
+    toggle     ) _toggle_bluetooth_controller_status ;;
+    connect    ) _connect_bluetooth_device "$dev"    ;;
+    disconnect ) _disconnect_bluetooth_device "$dev" ;;
+    pair       ) _pair_bluetooth_device              ;;
+    forget     ) _forget_bluetooth_devices           ;;
+    scan       )                                     ;;
+    info       ) 
+        jq --null-input --compact-output \
+            --argjson controller "$(_get_bluetooth_controller_info_as_json)" \
+            --argjson devices "$(_get_bluetooth_devices_info_as_json)" \
+            '$ARGS.named'
+        ;;
+esac
+

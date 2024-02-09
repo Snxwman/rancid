@@ -1,0 +1,56 @@
+(defpoll bluetooth :interval "1m" "./scripts/bluetooth info")
+
+(defwidget bluetooth []
+    (icon
+        :class "bluetooth"
+        :icon "${icons.bluetooth}"
+        :cmd "./scripts/popup bluetooth-info-window"))
+
+(defwidget bluetooth-info []
+    (box
+        :class 'bluetooth-info ${theme} ${style}'
+        :orientation "vertical"
+        (box
+            :class 'bluetooth-system ${theme} ${style}'
+            :space-evenly false
+            :spacing 20
+            (icon
+                :class "${bluetooth.controller.powered == "yes" ? "bluetooth-on" : ""}"
+                :icon "${icons.bluetooth}"
+                :cmd "./scripts/bluetooth toggle")
+            (label :text "${bluetooth.controller.name}"))
+        (for device in "${bluetooth.devices}"
+        (box
+            :class 'bluetooth-device-box ${theme} ${style}'
+            :space-evenly false
+            :spacing 20
+            (icon
+                :class
+                    'device-type-icon 
+                    ${device.icon} 
+                    ${device.paired == "yes" ? "device-paired" : "" } 
+                    ${device.connected == "yes" ? "device-connected" : ""} 
+                    ${theme} 
+                    ${style}'
+                :icon '${device.icon == "audio-headset"   ? "${icons.device.headphones}" : 
+                        device.icon == "audio-headphones" ? "${icons.device.earphones}" : 
+                        device.icon == "input-mouse"      ? "${icons.device.mouse}" : 
+                        device.icon == "input-keyboard"   ? "${icons.device.keyboard}" : "error"}'
+                :cmd '${device.connected == "no" 
+                        ? "./scripts/bluetooth connect ${device.mac}" 
+                        : "./scripts/bluetooth disconnect ${device.mac}"}')
+            (label
+                :class 'device-battery-icon ${theme} ${style}'
+                :text '${device.battery == "" ? "${icons.battery.unknown}" : 
+                        device.battery >= 95 ? "${icons.battery.full}" : 
+                        device.battery >= 75 ? "${icons.battery.high}" : 
+                        device.battery >= 50 ? "${icons.battery.med}" : 
+                        device.battery >= 25 ? "${icons.battery.low}" : 
+                        device.battery >=  0 ? "${icons.battery.zero}" :"error"}')
+            (label
+                :class 'device-name ${theme} ${style}'
+                :text "${device.name}")))))
+
+(defwindow bluetooth-info-window []
+    :geometry (geometry :x 600 :y 60 :anchor "top center")
+    (bluetooth-info))
