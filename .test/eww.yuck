@@ -33,6 +33,16 @@
         "med":  "",
         "high": "",
         "full": ""
+    },
+    "audio": {
+        "input": "󰍬",
+        "input-mute": "󰍭",
+        "output": "󰕾",
+        "output-mute": "󰖁",
+        "zero": "󰕿",
+        "low": "󰖀",
+        "med": "󰖀",
+        "high": "󰕾"
     }
 }`)
 
