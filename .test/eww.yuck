@@ -1,22 +1,59 @@
-(include "./widgets/wm.yuck")
-(include "./widgets/volume.yuck")
+(include "./modules/modules.yuck")
+
+(defvar netif "wlan0")
+
+(defvar wm "qtile")
+(defvar theme "tokyonight")
 (defvar style "pill")
+
+(defvar uptime-backend "rancid-bash")
+
+(defvar icons `{
+    "bluetooth": "󰂯",
+    "wifi": {
+        "off": "󰤭",
+        "zero": "󰤯",
+        "low": "󰤟",
+        "med": "󰤢",
+        "high": "󰤥",
+        "full": "󰤨",
+        "no-net": "󰤫"
+    },
+    "device": {
+        "headphones": "󰋋",
+        "earphones": "󱡏",
+        "mouse": "󰍽",
+        "keyboard": "󰌌"
+    },
+    "battery": {
+        "unknown": "󰂑",
+        "charging": "󰂄",
+        "zero": "",
+        "low":  "",
+        "med":  "",
+        "high": "",
+        "full": ""
+    }
+}`)
+
 (defwidget testing-widget []
     (box
 	:orientation "h"
 	:halign "start"
-	(workspaces )
-	(volume-control)))
+    :space-evenly false
+    :spacing 20
+	(workspaces)
+    (calendar-button)
+	(volume-control)
+    (uptime)
+    (bluetooth)
+    (wifi)))
+
 (defwindow test
     :monitor 0
-    :geometry (geometry 
-	:x "0%"
-	:y "50px"
-	:height "50px"
-	:anchor "top center")
+    :geometry (geometry :x "10%" :y "5px" :height "45px" :anchor "top center")
     :stacking "fg"
     :windowtype "dock"
     :wm-ignore false
-    :reserve (struts :distance "70px" :side "top")
     (testing-widget))
 
