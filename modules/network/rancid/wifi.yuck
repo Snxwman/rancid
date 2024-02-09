@@ -9,11 +9,11 @@
             ${theme} 
             ${style}'
         :icon
-           '${network.strength >= 90 ? "󰤨" : 
-               network.strength >= 70 ? "󰤥" : 
-               network.strength >= 40 ? "󰤢" : 
-               network.strength >= 10 ? "󰤟" : 
-               network.strength >=  0 ? "󰤯" : "error" }'
+           '${network.strength >= 90 ? "${icons.wifi.full}" : 
+              network.strength >= 70 ? "${icons.wifi.high}" : 
+              network.strength >= 40 ? "${icons.wifi.med}" : 
+              network.strength >= 10 ? "${icons.wifi.low}" : 
+              network.strength >=  0 ? "${icons.wifi.zero}" : "error" }'
         :tooltip "${network.ssid} : ${network.strength}"
         :cmd "./scripts/popup wifi-info-window"))
 
@@ -37,5 +37,5 @@
             :text "Connection Strength: \\t${network.strength}")))
 
 (defwindow wifi-info-window []
-    :geometry (geometry :x 0 :y 100 :anchor "top center")
+    :geometry (geometry :x 320 :y 60 :anchor "top center")
     (wifi-info))
