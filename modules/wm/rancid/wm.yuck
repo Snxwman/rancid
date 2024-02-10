@@ -1,4 +1,4 @@
-(defvar rancid-wm "$HOME/.config/rancid/scripts/wm")
+(defvar rancid-wm "./scripts/wm")
 
 (defvar wm-state "[]")
 (defvar reveal-layout false)
@@ -51,7 +51,7 @@
                     ${workspace.open_window == "true" ? "${style}-workspace-button-window-open" : ""}
                     ${button-classes}'
                 :tooltip "${workspace.name}"
-                :onclick "${rancid-wm} ${wm} togroup ${workspace.name}"
+                :onclick "${rancid-wm} ${wm-provider} togroup ${workspace.name}"
                 '${label == ""       ? "${workspace.icon}" : 
                    label == "icon"   ? "${workspace.icon}" : 
                    label == "name"   ? "${workspace.name}" : 
