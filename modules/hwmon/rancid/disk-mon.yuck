@@ -1,0 +1,12 @@
+(defwidget disk-widget 
+    [
+	?halign ?orientation	
+	?text-width ?mount-point
+    ]
+    (box
+	:halign "${halign ?: 'center'}"
+	:orientation "${orientation ?: 'h'}"
+	(label 
+	    :text "${EWW_DISK['${mount-point ?: '/home'}'].free / 1073741000.824}" 
+	    :limit-width "${text-width ?: '6'}" 
+	    :show-truncated false)))
