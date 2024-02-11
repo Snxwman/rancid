@@ -80,17 +80,11 @@ _disconnect_bluetooth_device() {
     bluetoothctl disconnect "$1" &> /dev/null
 }
 
-_get_bluetooth_scan_results_as_json() {
-    echo
-}
-
-_pair_bluetooth_device() {
-    echo
-}
-
-_forget_bluetooth_devices() {
-    echo
-}
+# _get_bluetooth_scan_results_as_json() {}
+#
+# _pair_bluetooth_device() {}
+#
+# _forget_bluetooth_devices() {}
 
 cmd="$1"; shift
 dev="$1"; shift
