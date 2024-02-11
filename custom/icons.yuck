@@ -1,0 +1,51 @@
+(defvar icons '{
+    "bluetooth": "󰂯",
+    "calendar": "󰃮",
+    "clock": "",
+    "wifi": {
+        "off": "󰤭",
+        "zero": "󰤯",
+        "low": "󰤟",
+        "med": "󰤢",
+        "high": "󰤥",
+        "full": "󰤨",
+        "no-net": "󰤫"
+    },
+    "device": {
+        "headphones": "󰋋",
+        "earphones": "󱡏",
+        "mouse": "󰍽",
+        "keyboard": "󰌌"
+    },
+    "battery": {
+        "unknown": "󰂑",
+        "charging": "󰂄",
+        "zero": "",
+        "low":  "",
+        "med":  "",
+        "high": "",
+        "full": ""
+    },
+    "audio": {
+        "input": "󰍬",
+        "input-mute": "󰍭",
+        "output": "󰕾",
+        "output-mute": "󰖁",
+        "zero": "󰕿",
+        "low": "󰖀",
+        "med": "󰖀",
+        "high": "󰕾"
+    },
+    "wm": {
+        "normal": "",
+        "active": "",
+        "window-open": ""
+    },
+    "hardware": {
+        "cpu": "",
+        "gpu": "󰢮",
+        "ram": "󰑭",
+        "disk": "󰋊",
+        "net": ""
+    }
+}')

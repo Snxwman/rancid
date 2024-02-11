@@ -1,0 +1,14 @@
+;; Eww / Rancid config
+(defvar theme "tokyonight")
+(defvar style "pill")
+
+;; System information
+(defvar network-interface "wlan0")
+
+;; User information
+(defvar provider '{
+    "term": "kitty",
+    "wm": "qtile"
+}')
+
+(defvar uptime-backend "rancid-bash")
