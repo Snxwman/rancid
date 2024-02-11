@@ -33,7 +33,7 @@
                     ${workspace.open_window == "true" ? "workspace-button-window-open" : ""} 
                     ${theme} ${style} ${button-classes}'
                 :tooltip "${workspace.name}"
-                :onclick "${rancid-wm} ${wm-provider} togroup ${workspace.name}"
+                :onclick "${rancid-wm} ${provider.wm} togroup ${workspace.name}"
                 '${label == ""       ? "${workspace.icon}" : 
                    label == "icon"   ? "${workspace.icon}" : 
                    label == "name"   ? "${workspace.name}" : 
