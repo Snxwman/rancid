@@ -9,18 +9,14 @@
 
 (defwidget workspaces 
     [
-        ?screen ?label ?theme 
+        ?screen ?label ?active-label ?window-open-label ?theme 
         ?box-classes ?space-evenly ?orientation ?halign 
         ?button-classes ?wm
     ]
     (box 
         :class 
             "workspace-widget 
-            ${theme}
-            ${theme}-workspace-widget
-            ${style}
-            ${style}-workspace-widget
-            ${box-classes}"
+            ${theme} ${style} ${box-classes}"
         :space-evenly '${space-evenly ?: false}'
         :orientation '${orientation == "" ? "horizontal" : "${orientation}"}'
         :halign '${halign == "" ? "start" : "${halign}"}'
@@ -35,47 +31,37 @@
                     ${workspace.screen == "1" ? "workspace-button-active-secondary" : ""} 
                     ${workspace.screen == "2" ? "workspace-button-active-tertiary" : ""} 
                     ${workspace.open_window == "true" ? "workspace-button-window-open" : ""} 
-                    ${theme} 
-                    ${theme}-workspace-button 
-                    ${workspace.active == "true" ? "${theme}-workspace-button-active" : ""} 
-                    ${workspace.screen == "0" ? "${theme}-workspace-button-active-primary" : ""} 
-                    ${workspace.screen == "1" ? "${theme}-workspace-button-active-secondary" : ""} 
-                    ${workspace.screen == "2" ? "${theme}-workspace-button-active-tertiary" : ""} 
-                    ${workspace.open_window == "true" ? "${theme}-workspace-button-window-open" : ""}  
-                    ${style} 
-                    ${style}-workspace-button 
-                    ${workspace.active == "true" ? "${style}-workspace-button-active" : ""} 
-                    ${workspace.screen == "0" ? "${style}-workspace-button-active-primary" : ""} 
-                    ${workspace.screen == "1" ? "${style}-workspace-button-active-secondary" : ""} 
-                    ${workspace.screen == "2" ? "${style}-workspace-button-active-tertiary" : ""} 
-                    ${workspace.open_window == "true" ? "${style}-workspace-button-window-open" : ""}
-                    ${button-classes}'
+                    ${theme} ${style} ${button-classes}'
                 :tooltip "${workspace.name}"
                 :onclick "${rancid-wm} ${wm-provider} togroup ${workspace.name}"
                 '${label == ""       ? "${workspace.icon}" : 
                    label == "icon"   ? "${workspace.icon}" : 
                    label == "name"   ? "${workspace.name}" : 
-                   label == "number" ? "${workspace.number}" : "error"}'))))
+                   label == "number" ? "${workspace.number}" : 
+                        workspace.active == true ? "${active-label}" : 
+                        workspace.open_window == true ? "${window-open-label}" : "${label}"}'))))
 
-
-(defwidget layouts [screen ?space-evenly ?transition ?duration ?keep-open ?wm ?theme]
+(defwidget layouts 
+    [
+        screen ?wm
+        ?space-evenly ?transition ?duration ?keep-open ?theme
+    ]
     (eventbox 
         :class 
             'layouts-widget 
-            ${theme}-layouts-widget'
+            ${theme} ${style}'
         :onhover "${rancid-wm} rancid toggle_layout_reveal" 
         :onhoverlost "${rancid-wm} rancid toggle_layout_reveal" 
         (box 
             :class 
                 'active-layout 
-                ${theme}-active-layout' 
+                ${theme} ${style}' 
             :space-evenly '${space-evenly == "" ? false : "${space-evenly}"}'
             (label 
                 :class 
                     'active-layout 
                     active-layout-icon 
-                    ${theme}-active-layout 
-                    ${theme}-active-layout-icon'
+                    ${theme} ${style}'
                 :text {replace(jq(wm-state, ".[] | select(.active == true) | select(.screen == ${screen}) | .layout_icon"), '\"', '')}
                 :tooltip {replace(jq(wm-state, ".[] | select(.active == true) | select(.screen == ${screen}) | .layout"), '\"', '')})
             (revealer 
@@ -85,12 +71,12 @@
                 (box 
                     :class 
                         'available-layout-box 
-                        ${theme}-available-layout-box'
+                        ${theme} ${style}'
                     (for layout in {jq(wm-state, ".[] | select(.active == true) | select(.screen == ${screen}) | .layouts")} 
                         (button 
                             :class 
                                 'available-layout-button 
-                                ${theme}-available-layout-button'
+                                ${theme} ${style}'
                             :tooltip "${layout.name}"
                             :onclick "${rancid-wm} ${wm} setlayout ${layout.name}"
                             "${layout.icon}")))))))
