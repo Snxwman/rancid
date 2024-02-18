@@ -1,5 +1,6 @@
 (include "./modules/audio/modules.yuck")
 (include "./modules/datetime/modules.yuck")
+(include "./modules/desktop/modules.yuck")
 (include "./modules/network/modules.yuck")
 (include "./modules/hwmon/modules.yuck")
 (include "./modules/util/modules.yuck")

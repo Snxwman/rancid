@@ -1,0 +1,50 @@
+#!/usr/bin/bash
+
+wallpaper_dir="$1"
+readarray -t files <<< "$(/usr/bin/ls $wallpaper_dir/*.{jpg,jpeg,png} 2> /dev/null)"
+
+_as_json() {
+    wallpapers_json="{\"wallpapers\": []}"
+
+    for file in "${files[@]}"; do
+        name="$(basename "$file" | rev | cut -d'.' -f2- | rev).jpg"
+        thumb="$(dirname "$file")/$name.thumb"
+
+        wallpaper_json="$( \
+            jq --null-input --compact-output \
+                --arg image "$file" \
+                --arg thumb "$thumb" \
+                '$ARGS.named'
+        )"
+        
+        wallpapers_json="$(jq ".wallpapers |= .+ [${wallpaper_json}]" <<< $wallpapers_json)"
+    done
+    
+    jq .wallpapers <<< $wallpapers_json
+}
+
+_as_yuck() {
+    literal="
+        (box 
+            :space-evenly true
+            :orientation \"vertical\"
+            :spacing 14"
+
+    for file in "${files[@]}"; do
+        literal+="
+            (eventbox
+                :cursor \"pointer\" 
+                :halign \"center\" 
+                :width 0 
+                :onclick \"feh --no-fehbg --bg-fill \\\""$file"\\\" &\"
+                (image
+                    :image-width 352 
+                    :path \""$file"\"))"
+    done
+
+    echo "$literal)"
+}
+#arr="$(_as_json "$files")"
+#echo $(_as_yuck "$files")
+#rancid "$PPID" update wallpapers="$(_as_yuck "$files")" 
+rancid "$PPID" update wallpapers="$(_as_json "$files")"
