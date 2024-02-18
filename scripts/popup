@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/usr/bin/bash
 
-grep "$1" <<< "$(rancid active-windows)" \
-   && { rancid close "$1" && rancid update "${1}-reveal"="false" ; } \
-   || { rancid open "$1" && rancid update "${1}-reveal"="true" ; } \
+grep "$1" <<< "$(rancid "$PPID" active-windows)" \
+   && { rancid "$PPID" close "$1" && rancid "$PPID" update "${1}-reveal"="false" ; } \
+   || { rancid "$PPID" open "$1" && rancid "$PPID" update "${1}-reveal"="true" ; }
 

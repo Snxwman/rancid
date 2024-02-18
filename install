@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+
+install-dir="${1:-/opt/}"
+ln -s "$(pwd)/.install/rancid" "$install-dir"
+
+# Link dirs into .test to mimic main config root
+ln -s "$(pwd)/{custom,modules,scripts,themes}" "$(pwd)/.test"

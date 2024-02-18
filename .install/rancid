@@ -1,3 +1,19 @@
-#!/bin/bash
+#!/usr/bin/bash
 
-eww --config "$HOME/.config/rancid/" "$@"
+RANCID_CONFIG_DIR="${RANCID_CONFIG_DIR:-$HOME/.config/rancid/}"
+RANCID_CONFIG_DIR_DEV="${RANCID_CONFIG_DIR_DEV:-$HOME/.config/rancid/.test/}"
+
+# Mode will be either a keyword like "dev" when invoked from the command line
+# or the parent process id of the caller ($PPID).
+mode="$1" 
+
+case "$mode" in
+    dev    ) shift; CONFIG="$RANCID_CONFIG_DIR_DEV" ;;
+    # When $mode starts with a number, assume it is a $PPID
+    [1-9]* ) shift; CONFIG="$(pwdx "$mode" | cut -d' ' -f2)" ;;
+    # The case when rancid is called with no explicit $mode
+    *      ) CONFIG="$RANCID_CONFIG_DIR" ;; 
+esac
+
+eww --config "$CONFIG" "$@"
+
