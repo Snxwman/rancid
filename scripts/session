@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+
+cmd="$1"; shift
+case $cmd in
+    lock     ) ;;
+    logout   ) ;;
+    sleep    ) ;;
+    reboot   ) reboot now ;;
+    shutdown ) shutdown ;;
+esac
