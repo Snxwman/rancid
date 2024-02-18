@@ -7,6 +7,9 @@
 
 ;; User information
 (defvar provider '{
+    "packages": [ 
+        "pacman", 
+    ],
     "term": "kitty",
     "wm": "qtile"
 }')
