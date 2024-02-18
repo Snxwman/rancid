@@ -33,7 +33,7 @@
 		${button-class}"
 	:orientation "${orientation ?: 'h'}"    
 	:onclick "./scripts/popup calendar-window"
-	""))
+	"${icons.calendar}"))
 
 (defwindow calendar-window
     :geometry (geometry

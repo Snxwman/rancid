@@ -15,7 +15,7 @@
               network.strength >= 10 ? "${icons.wifi.low}" : 
               network.strength >=  0 ? "${icons.wifi.zero}" : "error" }'
         :tooltip "${network.ssid} : ${network.strength}"
-        :cmd "./scripts/popup wifi-info-window"))
+        :lclick "./scripts/popup wifi-info-window"))
 
 (defwidget wifi-info []
     (box

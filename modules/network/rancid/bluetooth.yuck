@@ -1,10 +1,12 @@
 (defpoll bluetooth :interval "1m" "./scripts/bluetooth info")
 
+(defvar bluetooth-info-window-reveal false)
+
 (defwidget bluetooth []
     (icon
         :class "bluetooth"
         :icon "${icons.bluetooth}"
-        :cmd "./scripts/popup bluetooth-info-window"))
+        :lclick "./scripts/popup bluetooth-info-window"))
 
 (defwidget bluetooth-info []
     (box
@@ -17,7 +19,7 @@
             (icon
                 :class "${bluetooth.controller.powered == "yes" ? "bluetooth-on" : ""}"
                 :icon "${icons.bluetooth}"
-                :cmd "./scripts/bluetooth toggle")
+                :lclick "./scripts/bluetooth toggle")
             (label :text "${bluetooth.controller.name}"))
         (for device in "${bluetooth.devices}"
         (box
@@ -36,7 +38,7 @@
                         device.icon == "audio-headphones" ? "${icons.device.earphones}" : 
                         device.icon == "input-mouse"      ? "${icons.device.mouse}" : 
                         device.icon == "input-keyboard"   ? "${icons.device.keyboard}" : "error"}'
-                :cmd '${device.connected == "no" 
+                :lclick '${device.connected == "no" 
                         ? "./scripts/bluetooth connect ${device.mac}" 
                         : "./scripts/bluetooth disconnect ${device.mac}"}')
             (label
