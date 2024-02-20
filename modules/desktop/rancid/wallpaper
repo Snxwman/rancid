@@ -23,28 +23,4 @@ _as_json() {
     jq .wallpapers <<< $wallpapers_json
 }
 
-_as_yuck() {
-    literal="
-        (box 
-            :space-evenly true
-            :orientation \"vertical\"
-            :spacing 14"
-
-    for file in "${files[@]}"; do
-        literal+="
-            (eventbox
-                :cursor \"pointer\" 
-                :halign \"center\" 
-                :width 0 
-                :onclick \"feh --no-fehbg --bg-fill \\\""$file"\\\" &\"
-                (image
-                    :image-width 352 
-                    :path \""$file"\"))"
-    done
-
-    echo "$literal)"
-}
-#arr="$(_as_json "$files")"
-#echo $(_as_yuck "$files")
-#rancid "$PPID" update wallpapers="$(_as_yuck "$files")" 
 rancid "$PPID" update wallpapers="$(_as_json "$files")"

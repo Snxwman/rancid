@@ -1,23 +1,10 @@
-;; (defpoll wallpapers
-;;     :interval "30s" 
-;;     "./modules/desktop/rancid/wallpaper ~/media/photos/wallpaper/32:9")
-
 (defvar wallpapers "[]")
 (defvar wallpaper-switcher-window-reveal false)
 
 (defwidget wallpaper-switcher []
     (icon
         :icon "󰸉"
-        ;; :lclick "./scripts/popup wallpaper-switcher-window"))
         :lclick "./scripts/popup wallpaper-switcher-window && ./modules/desktop/rancid/wallpaper ~/media/photos/wallpaper/32:9bak"))
-
-;; (defwidget wallpaper-switcher-popup []
-;;     (scroll
-;;         :hscroll false
-;;         :vscroll true
-;;         :height 800
-;;         :width 380
-;;         (literal :content wallpapersc)))
 
 (defwidget wallpaper-switcher-popup []
     (scroll
