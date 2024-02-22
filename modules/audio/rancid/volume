@@ -6,16 +6,16 @@ mute(){
     	output ) 
             wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 
-            grep "volume-output-mute: false" <<< $(rancid state) &> /dev/null \
-            && rancid update volume-output-mute=true \
-            || rancid update volume-output-mute=false
+            grep "false" <<< $(rancid "$PPID" get volume-output-mute) &> /dev/null \
+                && rancid "$PPID" update volume-output-mute=true \
+                || rancid "$PPID" update volume-output-mute=false
             ;;
 	    input )
             wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 
-            grep "volume-input-mute: false" <<< $(rancid state) &> /dev/null \
-            && rancid update volume-input-mute=true \
-            || rancid update volume-input-mute=false
+            grep "false" <<< $(rancid "$PPID" get volume-input-mute) &> /dev/null \
+                && rancid "$PPID" update volume-input-mute=true \
+                || rancid "$PPID" update volume-input-mute=false
 			;;
     esac
 }
@@ -23,8 +23,8 @@ mute(){
 change(){
     dev="$1"; shift
     case "$dev" in 
-        output ) wpctl set-volume @DEFAULT_AUDIO_SINK@   $1% ;;
-        input  ) wpctl set-volume @DEFAULT_AUDIO_SOURCE@ $1% ;;
+        output ) wpctl set-volume @DEFAULT_AUDIO_SINK@   "$1"% ;;
+        input  ) wpctl set-volume @DEFAULT_AUDIO_SOURCE@ "$1"% ;;
     esac
 }
 
