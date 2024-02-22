@@ -1,10 +1,39 @@
-(defwidget icon [icon ?cmd ?tooltip ?class ?theme]
+(defwidget icon
+    [
+        icon 
+        ?lclick ?rclick ?mclick ?tooltip 
+        ?class ?theme
+    ]
     (button
+        :timeout "500ms"
         :class
-            'icon 
-            ${theme} 
-            ${style} 
-            ${class}'
-        :onclick "${cmd}"
+            "icon ${class} ${theme} ${style}"
+        :onclick "${lclick}"
+        :onmiddleclick "${mclick}"
+        :onrightclick "${rclick}"
         :tooltip "${tooltip}"
         "${icon}"))
+
+(defwidget rancid-icon
+    [
+        icon icon-type 
+        ?lclick ?mclick ?rclick ?tooltip 
+        ?classes ?theme ?style
+    ]
+    (button
+        :classes "rancid-button ${classes} ${theme} ${style}"
+        :onclick "${lclick}"
+        :onmiddleclick "${mclick}"
+        :onrightclick "${rclick}"
+        (box
+            (label
+                :active "${icon-type == "text" ? true : false}"
+                :visible "${icon-type == "text" ? true : false}"
+                :text "${icon}")
+            (image
+                :active "${icon-type == "image" ? true : false}"
+                :visible "${icon-type == "image" ? true : false}"
+                :image-width 16
+                :image-height 16
+                :path "${icon}"))))
+
