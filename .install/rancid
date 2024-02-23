@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
-RANCID_CONFIG_DIR="${RANCID_CONFIG_DIR:-$HOME/.config/rancid/}"
-RANCID_CONFIG_DIR_DEV="${RANCID_CONFIG_DIR_DEV:-$HOME/.config/rancid/.test/}"
+RANCID_CONFIG_DIR="${RANCID_CONFIG_DIR:-$HOME/.config/rancid}"
+RANCID_CONFIG_DIR_DEV="${RANCID_CONFIG_DIR_DEV:-$HOME/.config/rancid/.test}"
 
 # Mode will be either a keyword like "dev" when invoked from the command line
 # or the parent process id of the caller ($PPID).
