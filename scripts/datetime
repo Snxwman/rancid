@@ -7,3 +7,39 @@ case $arg in
     minute ) date '+%M' ;;
     hour   ) date '+%I' ;;
 esac
+
+jq --null-input --compact-output \
+    --argjson date "$(
+        jq --null-input --compact-output \
+            --arg year "$(date '+%Y')" \
+            --argjson month "$( 
+                jq --null-input --compact-output \
+                    --arg name "$(date '+%B')" \
+                    --arg short "$(date '+%b')" \
+                    --arg number "$(date '+%m')" \
+                    '$ARGS.named'
+                )" \
+            --argjson day "$( 
+                jq --null-input --compact-output \
+                    --arg name "$(date '+%A')" \
+                    --arg short "$(date '+%a')" \
+                    --arg number "$(date '+%d')" \
+                    '$ARGS.named'
+                )" \
+            '$ARGS.named'
+    )" \
+    --argjson time "$(
+        jq --null-input --compact-output \
+            --argjson hour "$(
+                jq --null-input --compact-output \
+                    --arg f24 "$(date '+%H')" \
+                    --arg f12 "$(date '+%I')" \
+                    --arg ampm "$(date '+%p')" \
+                    '$ARGS.named'
+                )" \
+            --arg minute "$(date '+%M')" \
+            --arg second "$(date '+%S')" \
+            '$ARGS.named'
+    )" \
+    '$ARGS.named'
+
