@@ -1,0 +1,7 @@
+(defpoll datetime :initial "{}" :interval "1s" "./scripts/datetime")
+
+(defwidget time []
+    (button 
+        :class "datetime clock"
+        :onclick "./scripts/popup calendar-window" 
+        "󰅐  ${datetime.time.hour.f24}:${datetime.time.minute}"))
