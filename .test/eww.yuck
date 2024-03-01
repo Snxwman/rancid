@@ -1,50 +1,17 @@
+(include "./custom/config.yuck")
+(include "./custom/icons.yuck")
+(include "./custom/override.yuck")
 (include "./modules/modules.yuck")
 
-(defvar netif "wlan0")
+;; (defvar netif "wlan0")
+;; (defvar theme "tokyonight")
+;; (defvar style "pill")
+;; (defvar wm-provider "qtile")
+;;
+;; (defvar uptime-backend "rancid-bash")
 
-(defvar wm "qtile")
-(defvar theme "tokyonight")
-(defvar style "pill")
-
-(defvar uptime-backend "rancid-bash")
-
-(defvar icons `{
-    "bluetooth": "󰂯",
-    "wifi": {
-        "off": "󰤭",
-        "zero": "󰤯",
-        "low": "󰤟",
-        "med": "󰤢",
-        "high": "󰤥",
-        "full": "󰤨",
-        "no-net": "󰤫"
-    },
-    "device": {
-        "headphones": "󰋋",
-        "earphones": "󱡏",
-        "mouse": "󰍽",
-        "keyboard": "󰌌"
-    },
-    "battery": {
-        "unknown": "󰂑",
-        "charging": "󰂄",
-        "zero": "",
-        "low":  "",
-        "med":  "",
-        "high": "",
-        "full": ""
-    },
-    "audio": {
-        "input": "󰍬",
-        "input-mute": "󰍭",
-        "output": "󰕾",
-        "output-mute": "󰖁",
-        "zero": "󰕿",
-        "low": "󰖀",
-        "med": "󰖀",
-        "high": "󰕾"
-    }
-}`)
+;; (defwidget testing-widget []
+;;     (wallpaper-switcher))
 
 (defwidget testing-widget []
     (box
@@ -52,12 +19,14 @@
 	:halign "start"
     :space-evenly false
     :spacing 20
-	(workspaces)
-    (calendar-button)
-	(volume-control)
-    (uptime)
-    (bluetooth)
-    (wifi)))
+        (workspaces)
+        (calendar-button)
+        (volume)
+        (time)
+        (uptime)
+        (wallpaper-switcher)
+        (bluetooth)
+        (wifi)))
 
 (defwindow test
     :monitor 0
