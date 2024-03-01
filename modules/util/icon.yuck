@@ -21,19 +21,19 @@
         ?classes ?theme ?style
     ]
     (button
-        :classes "rancid-button ${classes} ${theme} ${style}"
+        :class "rancid-button ${classes} ${theme} ${style}"
         :onclick "${lclick}"
         :onmiddleclick "${mclick}"
         :onrightclick "${rclick}"
         (box
             (label
-                :active "${icon-type == "text" ? true : false}"
-                :visible "${icon-type == "text" ? true : false}"
-                :text "${icon}")
+                :active '${icon-type == "text" ? true : false}'
+                :visible '${icon-type == "text" ? true : false}'
+                :text '${icon-type == "text" ? "${icon}" : ""}')
             (image
-                :active "${icon-type == "image" ? true : false}"
-                :visible "${icon-type == "image" ? true : false}"
+                :active '${icon-type == "image" ? true : false}'
+                :visible '${icon-type == "image" ? true : false}'
                 :image-width 16
                 :image-height 16
-                :path "${icon}"))))
+                :path '${icon-type == "image" ? "${icon}" : "./modules/util/null.jpg"}'))))
 
