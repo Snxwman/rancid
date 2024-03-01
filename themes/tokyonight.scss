@@ -1,65 +1,139 @@
-$c-black-1: #15161e;
-$c-black-2: #1a1b26;
+$color-black-1: #15161e;
+$color-black-2: #1a1b26;
 
-$c-dark-1: #1f2335;
-$c-dark-2: #24283b;
-$c-dark-3: #292e42;
-$c-dark-4: #3b4261;
-$c-dark-5: #414868;
+$color-dark-1: #1f2335;
+$color-dark-2: #24283b;
+$color-dark-3: #292e42;
+$color-dark-4: #3b4261;
+$color-dark-5: #414868;
 
-$c-light-1: #545c7e;
-$c-light-2: #565f89;
-$c-light-3: #737aa2;
-$c-light-4: #a9b1d6;
-$c-light-5: #c0caf5;
+$color-light-1: #545c7e;
+$color-light-2: #565f89;
+$color-light-3: #737aa2;
+$color-light-4: #a9b1d6;
+$color-light-5: #c0caf5;
 
-$c-hl-a1: #c53b53;
-$c-hl-a2: #db4b4b;
-$c-hl-a3: #ff757f;
-$c-hl-a4: #f7768e;
-$c-hl-a5: #ff007c;
+$color-red-1: #c53b53;
+$color-red-2: #db4b4b;
+$color-red-3: #ff757f;
+$color-red-4: #f7768e;
+$color-red-5: #ff007c;
 
-$c-red-1: #c53b53;
-$c-red-2: #db4b4b;
-$c-red-3: #ff757f;
-$c-red-4: #f7768e;
-$c-red-5: #ff007c;
+$color-yellow-1: #ff9e64;
+$color-yellow-2: #e0af68;
+$color-yellow-3: #ffc777;
 
-$c-hl-b1: #ff9e64;
-$c-hl-b2: #e0af68;
-$c-hl-b3: #ffc777;
+$color-green-1: #9ece6a;
+$color-green-2: #c3e88d;
 
-$c-yellow-1: #ff9e64;
-$c-yellow-2: #e0af68;
-$c-yellow-3: #ffc777;
+$color-teal-1: #41a6b5;
+$color-teal-2: #4fd6be;
 
-$c-hl-c1: #9ece6a;
-$c-hl-c2: #c3e88d;
+$color-blue-1: #394b70;
+$color-blue-2: #3d59a1;
+$color-blue-3: #7aa2f7;
+$color-blue-4: #7dcfff;
+$color-blue-5: #b4f9f8;
 
-$c-green-1: #9ece6a;
-$c-green-2: #c3e88d;
+$color-purple-1: #9d7cd8;
+$color-purple-2: #bb9af7;
 
-$c-hl-d1: #41a6b5;
-$c-hl-d2: #4fd6be;
+// Base semantic names
+//////////////////////////////////////////////////
 
-$c-teal-1: #41a6b5;
-$c-teal-2: #4fd6be;
+$theme-bg-100: $color-black-1;
+$theme-bg-200: $color-black-2;
+$theme-bg-300: $color-dark-1;
+$theme-bg-400: $color-dark-2;
+$theme-bg-500: $color-dark-3;
+$theme-bg-600: $color-dark-4;
+$theme-bg-700: $color-dark-5;
 
-$c-hl-e1: #394b70;
-$c-hl-e2: #3d59a1;
-$c-hl-e3: #7aa2f7;
-$c-hl-e4: #7dcfff;
-$c-hl-e5: #b4f9f8;
+$theme-fg-100: $color-light-1;
+$theme-fg-200: $color-light-2;
+$theme-fg-300: $color-light-3;
+$theme-fg-400: $color-light-4;
+$theme-fg-500: $color-light-5;
 
-$c-blue-1: #394b70;
-$c-blue-2: #3d59a1;
-$c-blue-3: #7aa2f7;
-$c-blue-4: #7dcfff;
-$c-blue-5: #b4f9f8;
+$theme-primary: $color-purple-2;
+$theme-secondary: $color-blue-4;
 
-$c-hl-f1: #9d7cd8;
-$c-hl-f2: #bb9af7;
+$theme-success: $color-green-1;
+$theme-failure: $color-red-2;
 
-$c-purple-1: #9d7cd8;
-$c-purple-2: #bb9af7;
+$theme-info: $color-blue-3;
+$theme-warning: $color-yellow-3;
+$theme-danger: $color-red-3;
+
+$theme-zero: $color-red-2;  // Intended for battery charge state, connection strength, hw temps etc.
+$theme-low: $color-yellow-2;
+$theme-med: $color-green-1;
+$theme-high: $color-teal-1;
+$theme-full: $color-blue-1;
+
+// Per widget names
+//////////////////////////////////////////////////
+
+// Audio
+$theme-volume-bar-bg: $theme-bg-200;
+$theme-volume-bar-fg: $color-blue-3;
+$theme-volume-bar-slider: $theme-fg-500;
+$theme-audio-muted: $color-light-3;
+
+// Datetime
+// $theme-calendar-selected: ;
+// $theme-calendar-month-year: ;
+// $theme-calendar-buttons: ;
+// $theme-calendar-button-hover: ;
+// $theme-calendar-day-names: ;
+
+// Hardware monitor
+// $theme-cpu-bar: ;
+// $theme-gpu-bar: ;
+// $theme-ram-bar: ;
+// $theme-disk-bar: ;
+
+// Networking
+// $theme-network-internet: ;
+// $theme-network-no-internet: ;
+// $theme-network-vpn-connected: ;
+
+// $theme-bluetooth-device-connected: ;
+// $theme-bluetooth-device-paired: ;
+// $theme-bluetooth-device-available: ;
+
+// Workspaces
+$theme-workspace-button: $color-light-4;
+$theme-workspace-button-background: $color-black-2;
+
+$theme-workspace-window-open: $color-blue-3;
+
+$theme-workspace-active: $color-blue-5;
+$theme-workspace-active-primary: $color-blue-4;
+$theme-workspace-active-secondary: $color-purple-1;
+$theme-workspace-active-tertiary: $color-red-5;
+
+* {
+    color: $theme-fg-500;
+}
+
+window {
+    background-color: rgba($theme-bg-700, $window-transparency);
+}
+
+tooltip {
+    background-color: $theme-bg-200;
+}
+
+button:hover {
+    background-color: $theme-bg-500;
+}
+
+button:hover * {
+    background-color: transparent;
+}
+
+button label:hover {
+    background-color: $theme-bg-500;
+}
 
