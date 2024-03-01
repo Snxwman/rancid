@@ -1,0 +1,18 @@
+$window-transparency: 100%;
+
+$font-family-mono: "FiraCode Nerd Font";
+$font-family-propo: "Comfortaa";
+$font-family-symbol: "Symbols Nerd Font";
+
+$font-size-100: 8px;
+$font-size-200: 10px;
+$font-size-300: 14px;
+$font-size-400: 16px;
+$font-size-500: 20px;
+$font-size-600: 24px;
+
+@import 'styles/modules';
+@import 'themes/tokyonight';
+@import 'modules/modules';
+@import 'custom/override';
+
