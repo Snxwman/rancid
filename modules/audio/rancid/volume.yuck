@@ -1,21 +1,17 @@
-(defpoll volume-output :interval "500ms" './modules/audio/rancid/volume get output')
-(defpoll volume-input :interval "500ms" './modules/audio/rancid/volume get input')
-
+(defpoll volume 
+    :initial "{}" 
+    :run-while volume-reveal 
+    :interval "150ms" "./modules/audio/rancid/volume get")
 (defvar volume-reveal false)
-(defvar volume-output-mute false)
-(defvar volume-input-mute false)
 
-(defvar rancid-volume "./modules/audio/rancid/volume")
-
-(defwidget volume-control [] 
+(defwidget volume [] 
     (rancid-icon
         :classes "volume-button"
         :icon-type "text" 
-        :icon "${volume-output-mute ? icons.audio.output-mute : icons.audio.output}"
-        :lclick "./scripts/popup volume"))
+        :icon '${volume.output.muted ? "${icons.audio.output-mute}" : "${icons.audio.output}"}'
+        :lclick "./scripts/popup volume-info-window"))
 
-
-(defwidget volume-window 
+(defwidget volume-info 
     [
         ?theme ?style ?type
         ?box-classes ?button-classes
@@ -23,35 +19,46 @@
         ?window-classes
     ]
     (box 
-        :class "volume-window ${theme} ${style} ${window-classes}"
+        :class 
+            "volume-window ${window-classes}"
         :orientation "vertical"
         :halign "center"
         (box
+            :class 
+                "${volume.output.volume <= audio-opts.normal  ? 'volume-level-normal'  : 
+                   volume.output.volume <= audio-opts.warning ? 'volume-level-warning' : 
+                   volume.output.volume >  audio-opts.warning ? 'volume-level-danger'  : ''} 
+                ${volume.output.muted == true ? 'muted' : ''}"
             :orientation "horizontal"
             :space-evenly false
             (icon
-                :class "mute-button ${theme} ${style} ${button-classes}"
-                :icon "${volume-output-mute ? '${icons.audio.output-mute}' : '${icons.audio.output}'}"
-                :lclick "${rancid-volume} mute output")
+                :class "mute-button ${button-classes}"
+                :icon "${volume.output.muted ? '${icons.audio.output-mute}' : '${icons.audio.output}'}"
+                :lclick "./modules/audio/rancid/volume mute output")
             (scale 
                 :width 250
-                :value volume-output
+                :value "${volume.output.volume}"
                 :orientation "horizontal"
-                :onchange "${rancid-volume} change output {}"))
+                :onchange "./modules/audio/rancid/volume change output {}"))
         (box
+            :class
+                "${volume.input.volume <= audio-opts.normal  ? 'volume-level-normal'  : 
+                   volume.input.volume <= audio-opts.warning ? 'volume-level-warning' : 
+                   volume.input.volume >  audio-opts.warning ? 'volume-level-danger'  : ''} 
+                ${volume.input.muted == true ? 'muted' : ''}"
             :orientation "horizontal"
             :space-evenly false
             (icon
-                :class "mute-button ${theme} ${style} ${button-classes}"
-                :icon "${volume-input-mute ? '${icons.audio.input-mute}' : '${icons.audio.input}'}"
-                :lclick "${rancid-volume} mute input")
+                :class "mute-button ${window-classes}" 
+                :icon "${volume.input.muted ? '${icons.audio.input-mute}' : '${icons.audio.input}'}"
+                :lclick "./modules/audio/rancid/volume mute input")
             (scale
                 :width 250
-                :value volume-input
+                :value "${volume.input.volume}"
                 :orientation "horizontal"
-                :onchange "${rancid-volume} change input {}"))))
+                :onchange "./modules/audio/rancid/volume change input {}"))))
 	
 
-(defwindow volume 
+(defwindow volume-info-window
     :geometry (geometry :x 0 :y 120 :anchor "top center")
-    (volume-window))
+    (volume-info))

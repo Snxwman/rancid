@@ -14,4 +14,9 @@
     "wm": "qtile"
 }')
 
+(defvar audio-opts '{
+    "normal": 100,
+    "warning": 120
+}')
+
 (defvar uptime-backend "rancid-bash")

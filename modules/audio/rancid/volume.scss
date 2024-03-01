@@ -1,0 +1,37 @@
+.volume-window {
+    scale highlight {
+        background-color: $theme-volume-bar-fg; 
+        min-height: 10px;
+    }
+
+    scale trough {
+        background-color: $theme-volume-bar-bg;
+    }
+
+    scale slider {
+        background-color: $theme-volume-bar-slider;
+    }
+}
+
+.volume-level-normal > scale highlight {
+    background-color: $theme-volume-bar-fg;
+}
+
+.volume-level-warning > scale highlight {
+    background-color: $theme-warning;
+}
+
+.volume-level-danger > scale highlight {
+    background-color: $theme-danger;
+}
+
+.muted {
+    > button > label {
+        color: $theme-audio-muted;
+    }
+
+    > scale highlight {
+        background-color: $theme-audio-muted;
+    }
+}
+

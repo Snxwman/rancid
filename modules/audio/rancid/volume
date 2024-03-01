@@ -1,52 +1,45 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 mute(){
-    dev="$1"; shift
-    case "$dev" in
-    	output ) 
-            wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-
-            grep "false" <<< $(rancid "$PPID" get volume-output-mute) &> /dev/null \
-                && rancid "$PPID" update volume-output-mute=true \
-                || rancid "$PPID" update volume-output-mute=false
-            ;;
-	    input )
-            wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
-
-            grep "false" <<< $(rancid "$PPID" get volume-input-mute) &> /dev/null \
-                && rancid "$PPID" update volume-input-mute=true \
-                || rancid "$PPID" update volume-input-mute=false
-			;;
-    esac
+    wpctl set-mute "$1" toggle
 }
 
 change(){
-    dev="$1"; shift
-    case "$dev" in 
-        output ) wpctl set-volume @DEFAULT_AUDIO_SINK@   "$1"% ;;
-        input  ) wpctl set-volume @DEFAULT_AUDIO_SOURCE@ "$1"% ;;
-    esac
+    wpctl set-volume "$1" "$2"%
 }
 
 get-volume(){
-    dev="$1"; shift
-    case "$dev" in 
-        output )
-            wpctl get-volume @DEFAULT_AUDIO_SINK@ |\
-            cut -f 2 -d '.' |\
-            cut -f1 -d ' '
-            ;;
-        input )
-            wpctl get-volume @DEFAULT_AUDIO_SOURCE@ |\
-            cut -f 2 -d '.' |\
-            cut -f1 -d ' ' 
-            ;;
-    esac
+    volume="$(\
+        wpctl get-volume "$1" |
+        cut -d' ' -f2 |\
+        sed 's/\.//; s/^0*//')"
+
+    grep "MUTED" <<< $(wpctl get-volume "$1") &> /dev/null \
+        && muted="true" \
+        || muted="false"
+
+    jq --null-input --compact-output \
+        --arg volume "$volume" \
+        --arg muted "$muted" \
+        '$ARGS.named'
 }
 
-command="$1"; shift
-case $command in
-    mute   ) mute "$@" ;;
-    change ) change "$@" ;;
-    get    ) get-volume "$@" ;;
+cmd="$1"; shift
+dev="$1"; shift
+
+case "$dev" in
+    output ) dev="@DEFAULT_AUDIO_SINK@"   ;;
+    input  ) dev="@DEFAULT_AUDIO_SOURCE@" ;;
 esac
+
+case "$cmd" in
+    mute   ) mute "$dev" "$@"   ;;
+    change ) change "$dev" "$@" ;;
+    get    ) 
+        jq --null-input --compact-output \
+            --argjson output "$(get-volume "@DEFAULT_AUDIO_SINK@")" \
+            --argjson input "$(get-volume "@DEFAULT_AUDIO_SOURCE@")" \
+            '$ARGS.named'
+        ;;
+esac
+
