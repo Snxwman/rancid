@@ -1,7 +1,3 @@
-.test/custom
-.test/icons
-.test/modules
-.test/scripts
-.test/themes
+.test/eww.yuck
 
 custom/
