@@ -1,0 +1,35 @@
+.workspace-button, 
+.workspace-button * {
+    background-color: $theme-workspace-button-background;
+    color: $theme-workspace-button;
+}
+
+.workspace-button {
+    border-width: 2px;
+}
+
+.workspace-button-window-open > label {
+    border-color: $theme-workspace-window-open;
+    color: $theme-workspace-window-open;
+}
+
+.workspace-button-active > label {
+    border-color: $theme-workspace-active;
+    color: $theme-workspace-active;
+}
+
+.workspace-button-active-primary > label {
+    border-color: $theme-workspace-active-primary;
+    color: $theme-workspace-active-primary;
+}
+
+.workspace-button-active-secondary > label {
+    border-color: $theme-workspace-active-secondary;
+    color: $theme-workspace-active-secondary;
+}
+
+.workspace-button-active-tertiary > label {
+    border-color: $theme-workspace-active-tertiary;
+    color: $theme-workspace-active-tertiary;
+}
+
