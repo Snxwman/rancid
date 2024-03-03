@@ -1,1 +1,2 @@
 (include "./modules/desktop/rancid/wallpaper.yuck")
+(include "./modules/desktop/rancid/wm.yuck")
