@@ -1,5 +1,5 @@
 (defvar wifi-info-window-reveal false)
-(defpoll network :interval "3s" "./scripts/network wlan0")
+(defpoll network :interval "10s" "./scripts/network wlan0")
 
 (defwidget wifi []
     (icon
@@ -28,7 +28,7 @@
             :text "Default Gateway: \\t\\t${network.gateway}")
         (label
             :xalign 0
-            :text "IPv4 Address: \\t\\t\\t${network.ipv4}")
+            :text "IPv4 Address: \\t\\t${network.ipv4}")
         (label
             :xalign 0
             :text "DNS Server(s): \\t\\t${network.dns}")
