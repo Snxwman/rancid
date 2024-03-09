@@ -1,2 +1,4 @@
+(defpoll dt :initial "{}" :interval "1s" "./scripts/datetime")
+
 (include "./modules/desktop/rancid/wallpaper.yuck")
 (include "./modules/desktop/rancid/wm.yuck")

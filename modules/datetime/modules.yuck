@@ -1,5 +1,5 @@
 (include "./modules/datetime/rancid/calendar.yuck")
 (include "./modules/datetime/rancid/clock.yuck")
-(include "./modules/datetime/rancid/date.yuck")
 (include "./modules/datetime/rancid/stopwatch.yuck")
+(include "./modules/datetime/rancid/time.yuck")
 (include "./modules/datetime/rancid/uptime.yuck")
