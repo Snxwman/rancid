@@ -1,45 +1,33 @@
+(include "./custom/injections.yuck")
+
 (defpoll calendar-day :interval "1h" "./scripts/date day")
 (defpoll calendar-year :interval "24h" "./scripts/date year")
 (defvar calendar-reveal false)
 
-(defwidget calendar-widget 
-    [
-	?calendar-class
-	?orientation
-    ]
-    (box 
-	:class "calendar-widget 
-		${theme} 
-		${theme}-calendar-widget 
-		${style} 
-		${style}-calendar-widget 
-		${calendar-class}"
-	:orientation '${orientation ?: "v"}'
-	(calendar
-	    :day calendar-day
-	    :year calendar-year)))
-
 (defwidget calendar-button 
     [
-	?button-class
-	?orientation
+        ?button-class
+        ?orientation
     ]
-    (button
-	:class "calendar-button 
-		${theme} 
-		${theme}-calendar-button 
-		${style} 
-		${style}-calendar-button 
-		${button-class}"
-	:orientation "${orientation ?: 'h'}"    
-	:onclick "./scripts/popup calendar-window"
-	"${icons.calendar}"))
+    (rancid-icon
+        :class "calendar-button ${button-class}"
+        :lclick "./scripts/popup calendar-window"
+        :icon-type "text"
+        :icon "${icons.calendar} "
+        (calendar-button-children)))
+
+(defwidget calendar-widget 
+    [
+        ?calendar-class
+        ?orientation
+    ]
+    (box 
+        :class "calendar-widget ${calendar-class}"
+        :orientation '${orientation ?: "v"}'
+        (calendar
+            :day calendar-day
+            :year calendar-year)))
 
 (defwindow calendar-window
-    :geometry (geometry
-	:x "0px"
-	:y "130px"
-	:anchor "top center"
-	:width "400px"
-	:height "200px")
+    :geometry (geometry :x "0px" :y "130px" :anchor "top center" :width "400px" :height "200px")
     (calendar-widget))
