@@ -1,7 +1,8 @@
-(defpoll datetime :initial "{}" :interval "1s" "./scripts/datetime")
-
+(include "./custom/injections.yuck")
 (defwidget time []
-    (button 
+    (rancid-icon
         :class "datetime clock"
-        :onclick "./scripts/popup calendar-window" 
-        "󰅐  ${datetime.time.hour.f24}:${datetime.time.minute}"))
+        :lclick "./scripts/popup calendar-window" 
+        :icon-type "text"
+        :icon "󰅐 " 
+        (time-button-children)))
