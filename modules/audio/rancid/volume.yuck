@@ -1,7 +1,7 @@
 (defpoll volume 
     :initial "{}" 
     :run-while volume-reveal 
-    :interval "150ms" "./modules/audio/rancid/volume get")
+    :interval "300ms" "./modules/audio/rancid/volume get")
 (defvar volume-reveal false)
 
 (defwidget volume [] 
