@@ -18,7 +18,7 @@
     [
         icon icon-type 
         ?lclick ?mclick ?rclick ?tooltip 
-        ?classes ?theme ?style
+        ?classes ?theme ?style ?width ?height
     ]
     (button
         :class "rancid-button ${classes} ${theme} ${style}"
@@ -26,6 +26,7 @@
         :onmiddleclick "${mclick}"
         :onrightclick "${rclick}"
         (box
+            :space-evenly false
             (label
                 :active '${icon-type == "text" ? true : false}'
                 :visible '${icon-type == "text" ? true : false}'
@@ -33,7 +34,8 @@
             (image
                 :active '${icon-type == "image" ? true : false}'
                 :visible '${icon-type == "image" ? true : false}'
-                :image-width 16
-                :image-height 16
-                :path '${icon-type == "image" ? "${icon}" : "./modules/util/null.jpg"}'))))
+                :image-width "${width ?: 16}"
+                :image-height "${height ?: 16}"
+                :path '${icon-type == "image" ? "${icon}" : "./modules/util/null.jpg"}')
+            (children))))
 
