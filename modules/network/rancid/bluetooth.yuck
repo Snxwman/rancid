@@ -1,4 +1,5 @@
 (defpoll bluetooth :interval "1m" "./scripts/bluetooth info")
+(defvar popup "/home/sam/.config/rancid/scripts/popup")
 
 (defvar bluetooth-info-window-reveal false)
 
@@ -6,7 +7,7 @@
     (icon
         :class "bluetooth"
         :icon "${icons.bluetooth}"
-        :lclick "./scripts/popup bluetooth-info-window"))
+        :lclick "${popup} bluetooth-info-window"))
 
 (defwidget bluetooth-info []
     (box
@@ -28,16 +29,13 @@
             :spacing 20
             (icon
                 :class
-                    'device-type-icon 
-                    ${device.icon} 
+                    'device-type-icon ${device.icon} ${theme} ${style} 
                     ${device.paired == "yes" ? "device-paired" : "" } 
-                    ${device.connected == "yes" ? "device-connected" : ""} 
-                    ${theme} 
-                    ${style}'
-                :icon '${device.icon == "audio-headset"   ? "${icons.device.headphones}" : 
-                        device.icon == "audio-headphones" ? "${icons.device.earphones}" : 
-                        device.icon == "input-mouse"      ? "${icons.device.mouse}" : 
-                        device.icon == "input-keyboard"   ? "${icons.device.keyboard}" : "error"}'
+                    ${device.connected == "yes" ? "device-connected" : ""}'
+                :icon '${device.icon == "audio-headset"    ? "${icons.device.headphones}" : 
+                         device.icon == "audio-headphones" ? "${icons.device.earphones}" : 
+                         device.icon == "input-mouse"      ? "${icons.device.mouse}" : 
+                         device.icon == "input-keyboard"   ? "${icons.device.keyboard}" : "error"}'
                 :lclick '${device.connected == "no" 
                         ? "./scripts/bluetooth connect ${device.mac}" 
                         : "./scripts/bluetooth disconnect ${device.mac}"}')
@@ -54,5 +52,5 @@
                 :text "${device.name}")))))
 
 (defwindow bluetooth-info-window []
-    :geometry (geometry :x 600 :y 60 :anchor "top center")
+    :geometry (geometry :x 500 :y 55 :anchor "top center")
     (bluetooth-info))
