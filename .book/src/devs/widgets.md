@@ -2,7 +2,14 @@
 
 ## Variables
 
+Every widget must have variables to toggle their `:visible` or `:reveal` attributes.
+These variables should be named as `<widget name>-<colletion>-visible` or `<widget name>-<collection>-reveal`
 
+*Example*
+```yuck
+(defvar volume-rancid-visible true)
+(defvar volume-rancid-reveal true)
+```
 
 ## Interaction
 
