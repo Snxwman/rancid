@@ -1,0 +1,11 @@
+;; (defwidget context-menu 
+;;     [
+;;         items actions ?classes
+;;     ]
+;;     (box
+;;         :class
+;;             "context-menu
+;;             ${theme} ${style} ${classes}"
+;;         (for item in "${items}"
+;;             )))
+

@@ -1,0 +1,15 @@
+#!/usr/bin/bash
+
+_pacman_info() {
+    
+    jq --no-input --compact-output \
+        --arg updates
+        
+}
+
+pkgmgr="$1"; shift
+case "$pkgmgr" in
+    pacman )
+    yay )
+    asdf )
+esac

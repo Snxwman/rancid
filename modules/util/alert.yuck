@@ -1,0 +1,9 @@
+;; (defwidget alert 
+;;     [
+;;         ?alert-level
+;;         confirm-cmd ?reject-cmd
+;;     ]
+;;     (box))
+;;
+;; (defwindow alert-window
+;;     (alert))

@@ -1,0 +1,8 @@
+#!/usr/bin/bash
+
+CLIPBOARD_HISTORY="/tmp/clipboard.history"
+# <unixtime> <contents>
+
+clipboard_contents=$(xclip -out -selection primary)
+timestamp=$(date '+%s')
+

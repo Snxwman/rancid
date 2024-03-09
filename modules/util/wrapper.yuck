@@ -1,0 +1,187 @@
+(defwidget rancid-combo-box-test 
+    [
+        ?combo-box-classes
+        ?valign ?halign ?vexpand ?hexpand ?height ?width ?active ?visible ?tooltip
+        items ?timeout ?onchange
+    ]
+    (combo-box-test
+        :class 
+            "${theme} ${style} ${combo-box-classes} 
+            ${override-classes.all} ${override-classes.combo-box-test}"
+        :valign "${valign ?: "fill"}" :halign "${halign ?: "fill"}"
+        :vexpand "${vexpand ?: false}" :hexpand "${hexpand ?: false}"
+        :height "${height}" :width "${width}"
+        :active "${active ?: true}" :visible "${visible ?: true}"
+        :tooltip "${tooltip ?: ""}"
+        :items "${items}"
+        :timeout "${timeout ?: "200ms"}"
+        :onchange "${onchange}"))
+
+(defwidget rancid-expander
+    [
+        ?combo-box-classes
+        ?valign ?halign ?vexpand ?hexpand ?height ?width ?active ?visible ?tooltip
+
+    ]
+    (expander))
+
+(defwidget rancid-revealer 
+    [
+        ?combo-box-classes
+        ?valign ?halign ?vexpand ?hexpand ?height ?width ?active ?visible ?tooltip
+
+    ]
+    (revealer))
+
+(defwidget rancid-checkbox
+    [
+        ?combo-box-classes
+        ?valign ?halign ?vexpand ?hexpand ?height ?width ?active ?visible ?tooltip
+
+    ]
+    (checkbox))
+
+(defwidget rancid-color-button 
+    [
+        ?combo-box-classes
+        ?valign ?halign ?vexpand ?hexpand ?height ?width ?active ?visible ?tooltip
+
+    ]
+    (color-button))
+
+(defwidget rancid-color-chooser
+    [
+        ?combo-box-classes
+        ?valign ?halign ?vexpand ?hexpand ?height ?width ?active ?visible ?tooltip
+
+    ]
+    (color-chooser))
+
+(defwidget rancid-scale
+    [
+        ?combo-box-classes
+        ?valign ?halign ?vexpand ?hexpand ?height ?width ?active ?visible ?tooltip
+
+    ]
+    (scale))
+
+(defwidget rancid-progress
+    [
+        ?combo-box-classes
+        ?valign ?halign ?vexpand ?hexpand ?height ?width ?active ?visible ?tooltip
+
+    ]
+    (progress))
+
+(defwidget rancid-input
+    [
+        ?combo-box-classes
+        ?valign ?halign ?vexpand ?hexpand ?height ?width ?active ?visible ?tooltip
+
+    ]
+    (input))
+
+(defwidget rancid-button
+    [
+        ?combo-box-classes
+        ?valign ?halign ?vexpand ?hexpand ?height ?width ?active ?visible ?tooltip
+
+    ]
+    (button))
+
+(defwidget rancid-image
+    [
+        ?combo-box-classes
+        ?valign ?halign ?vexpand ?hexpand ?height ?width ?active ?visible ?tooltip
+
+    ]
+    (image))
+
+(defwidget rancid-box
+    [
+        ?combo-box-classes
+        ?valign ?halign ?vexpand ?hexpand ?height ?width ?active ?visible ?tooltip
+
+    ]
+    (box))
+
+(defwidget rancid-overlay
+    [
+        ?combo-box-classes
+        ?valign ?halign ?vexpand ?hexpand ?height ?width ?active ?visible ?tooltip
+
+    ]
+    (overlay))
+
+(defwidget rancid-centerbox
+    [
+        ?combo-box-classes
+        ?valign ?halign ?vexpand ?hexpand ?height ?width ?active ?visible ?tooltip
+
+    ]
+    (centerbox))
+
+(defwidget rancid-scroll
+    [
+        ?combo-box-classes
+        ?valign ?halign ?vexpand ?hexpand ?height ?width ?active ?visible ?tooltip
+
+    ]
+    (scroll))
+
+(defwidget rancid-event-box
+    [
+        ?combo-box-classes
+        ?valign ?halign ?vexpand ?hexpand ?height ?width ?active ?visible ?tooltip
+
+    ]
+    (eventbox))
+
+(defwidget rancid-label
+    [
+        ?combo-box-classes
+        ?valign ?halign ?vexpand ?hexpand ?height ?width ?active ?visible ?tooltip
+
+    ]
+    (label))
+
+(defwidget rancid-literal
+    [
+        ?combo-box-classes
+        ?valign ?halign ?vexpand ?hexpand ?height ?width ?active ?visible ?tooltip
+
+    ]
+    (literal))
+
+(defwidget rancid-calendar
+    [
+        ?combo-box-classes
+        ?valign ?halign ?vexpand ?hexpand ?height ?width ?active ?visible ?tooltip
+
+    ]
+    (calendar))
+
+(defwidget rancid-transform
+    [
+        ?combo-box-classes
+        ?valign ?halign ?vexpand ?hexpand ?height ?width ?active ?visible ?tooltip
+
+    ]
+    (transform))
+
+(defwidget rancid-circular-progress
+    [
+        ?combo-box-classes
+        ?valign ?halign ?vexpand ?hexpand ?height ?width ?active ?visible ?tooltip
+
+    ]
+    (circular-progress))
+
+(defwidget rancid-graph
+    [
+        ?combo-box-classes
+        ?valign ?halign ?vexpand ?hexpand ?height ?width ?active ?visible ?tooltip
+
+    ]
+    (graph))
+
