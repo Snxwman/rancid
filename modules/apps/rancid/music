@@ -1,0 +1,112 @@
+#!/usr/bin/bash
+
+get_player_metadata() {
+    art_cache="$XDG_CACHE_HOME/eww/music"
+    # [[ -d "$art_cache" ]] || mkdir -p "$art_cache"
+   
+    active_player="$1"
+
+    if [[ -n "$active_player" ]]; then
+        art_url="$(playerctl --player "$active_player" metadata --format "{{mpris:artUrl}}")"
+
+        case "$art_url" in
+            file* ) 
+                art_path="${art_url#*file://}"
+                ;;
+            http* )  
+                art_filename="$(rev <<< "$art_url" | cut -d'/' -f1 | rev)"
+                art_path="$art_cache/$art_filename"
+                [[ -f "$art_path" ]] || curl "$art_url" --output "$art_path"
+                ;;
+            * ) art_path="default"
+        esac
+
+        music_json="$(playerctl --player "$active_player" metadata --format \
+        "{ 
+            \"player\": {
+                \"player\": \"{{playerName}}\",
+                \"status\": \"{{lc(status)}}\",
+                \"title\": \"{{title}}\",
+                \"artist\": \"{{artist}}\",
+                \"percent\": \"{{position / mpris:length * 100}}\",
+                \"shuffle\": \"{{shuffle}}\",
+                \"loop\": \"{{loop}}\",
+                \"album\": {
+                    \"name\": \"{{album}}\",
+                    \"art\": \"$art_path\"
+                },
+                \"position\": {     
+                    \"fmt\": \"{{duration(position)}}\",
+                    \"sec\": \"{{position / 1000000}}\"
+                },
+                \"duration\": {
+                    \"fmt\": \"{{duration(mpris:length)}}\",
+                    \"sec\": \"{{mpris:length / 1000000}}\"
+                }
+            } 
+        }")"
+    else
+        music_json="
+        { 
+            \"player\": {
+                \"player\": null,
+                \"status\": null,
+                \"title\": \"nothing playing\",
+                \"artist\": null,
+                \"percent\": null,
+                \"shuffle\": null,
+                \"loop\": null,
+                \"album\": {
+                    \"name\": null,
+                    \"art\": \"./modules/util/null.jpg\"
+                },
+                \"position\": {     
+                    \"fmt\": \"0:00\",
+                    \"sec\": \"0\"
+                },
+                \"duration\": {
+                    \"fmt\": \"0:00\",
+                    \"sec\": \"0\"
+                }
+            } 
+        }"
+    fi
+
+    jq --compact-output <<< "$music_json"
+}
+
+rotate_loop() {
+    state="$(playerctl --player "$1" loop)"
+    case "$state" in
+        "None"     ) playerctl --player "$1" loop Track    ;;
+        "Track"    ) playerctl --player "$1" loop Playlist ;;
+        "Playlist" ) playerctl --player "$1" loop None     ;;
+    esac
+}
+
+get_active_player() {
+    readarray -t players <<< $(playerctl --list-all | grep -v chromium | cut -d'.' -f1)
+    active_player=""
+
+    for player in "${players[@]}"; do
+        if [[ "$(playerctl --player "$player" status)" = "Playing" ]]; then
+            active_player="$player"
+        fi
+    done
+
+    echo "$active_player"
+}
+
+cmd="$1"; shift
+active_player="$(get_active_player)"
+
+case "$cmd" in
+    playpause ) playerctl --player "$active_player" play-pause     ;;
+    backwards ) playerctl --player "$active_player" previous       ;;
+    forwards  ) playerctl --player "$active_player" next           ;;
+    shuffle   ) playerctl --player "$active_player" shuffle toggle ;;
+    seek      ) playerctl --player "$active_player" position "$1"  ;;
+    loop      ) rotate_loop "$active_player"                       ;;
+    info      ) get_player_metadata "$active_player"               ;;
+esac
+

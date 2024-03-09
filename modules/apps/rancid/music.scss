@@ -1,0 +1,41 @@
+.music-seeker {
+    padding: 0px;
+    margin-bottom: 1px;
+    min-height: 1px;
+    min-width: 600px;
+
+    trough {
+        background-color: $theme-volume-bar-bg;
+        min-height: 2px;
+    }
+
+    trough highlight {
+        background-color: $theme-volume-bar-fg;
+        margin: 0;
+    }
+}
+
+.cava {
+    color: $theme-secondary; 
+    // background-color: $theme-primary;
+}
+
+.track-title {
+    font-size: $font-size-400;
+    font-weight: bold;
+}
+
+.track-artist {
+    font-size: $font-size-300;
+}
+
+.song-position, .song-length {
+    font-size: $font-size-300;
+    margin-left: 5px;
+}
+
+.loop {
+    color: white;
+}
+
+

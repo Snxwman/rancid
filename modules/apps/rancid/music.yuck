@@ -1,0 +1,64 @@
+(defpoll music :initial "{}" :interval "1s" "./modules/apps/rancid/music info")
+
+(defwidget music []
+    (box
+        :class "music"
+        :space-evenly false
+        :orientation "vertical" 
+        (box
+            :space-evenly false
+            :spacing 10
+            (image
+                :class "album-art"
+                :image-width 30
+                :image-height 30
+                :path "${music.player.album.art}")
+            (box
+                :class "track-info"
+                :space-evenly false
+                :orientation "vertical"
+                (label
+                    :class "track-title"
+                    :text "${music.player.title}")
+                (label
+                    :class "track-artist"
+                    :text "${music.player.artist}"))
+            (label 
+                :class "cava"
+                :hexpand true 
+                :text "${cava}")
+            (box 
+                (rancid-icon
+                    :class "backwards"
+                    :lclick "./modules/apps/rancid/music backwards"
+                    :icon-type "text"
+                    :icon "")
+                (rancid-icon
+                    :class "play-pause"
+                    :lclick "./modules/apps/rancid/music playpause"
+                    :icon-type "text"
+                    :icon '${music.player.status == "playing" ? "" : ""}')
+                (rancid-icon
+                    :class "forwards"
+                    :lclick "./modules/apps/rancid/music forwards"
+                    :icon-type "text"
+                    :icon "")
+                (rancid-icon
+                    :class 'loop ${music.player.loop == "None" ? "loop-off" : "loop-on"}'
+                    :lclick "./modules/apps/rancid/music loop"
+                    :icon-type "text"
+                    :icon '${music.player.loop == "Track"    ? "󰑘" : 
+                             music.player.loop == "Playlist" ? "󰑖" : "󰑗"}')
+                (rancid-icon
+                    :class "play-pause"
+                    :lclick "./modules/apps/rancid/music shuffle"
+                    :icon-type "text"
+                    :icon '${music.player.shuffle == "true" ? "󰒟" : "󰒞"}')
+            ))
+        (scale
+            :class "music-seeker"
+            :onchange "./modules/apps/rancid/music seek {}"
+            :width 600
+            :min 0
+            :max "${music.player.duration.sec}"
+            :value "${music.player.position.sec}")))
